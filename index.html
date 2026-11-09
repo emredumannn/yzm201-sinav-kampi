@@ -185,8 +185,8 @@ nav.tabs a[aria-current="page"]{color:var(--accent)}
 <main class="view" id="v-konular">
   <section class="hero">
     <div class="eyebrow">YZM201 · Veri Yapıları · Vize</div>
-    <h2>Beş ders, tek gece</h2>
-    <p class="muted">Pointers, Listeler, Yığınlar, Kuyruklar ve Özyineleme. Anlatımlar doğrudan hocanın slaytlarından çıkarıldı; sınavda soru olmaya en yatkın yerler <b style="color:var(--bad)">Tuzak</b> kutularında.</p>
+    <h2>Altı ders, tek gece</h2>
+    <p class="muted">Pointers, Listeler, Çift ve Dairesel Listeler, Yığınlar, Kuyruklar ve Özyineleme. Anlatımlar doğrudan hocanın slaytlarından çıkarıldı; sınavda soru olmaya en yatkın yerler <b style="color:var(--bad)">Tuzak</b> kutularında.</p>
     <div class="countdown">
       <div class="stat"><b id="stQ">0</b><span>soru bankası</span></div>
       <div class="stat"><b id="stDone">0</b><span>çözülen soru</span></div>
@@ -202,6 +202,7 @@ nav.tabs a[aria-current="page"]{color:var(--accent)}
       <li><b>Özyineleme</b> <span>~35 dk</span><br><span style="color:var(--muted)">fact, power, writeVertical, writeBackward, ikili arama izleri. Çıktı sorusu gelir.</span></li>
       <li><b>Pointers</b> <span>~35 dk</span><br><span style="color:var(--muted)">Pointer aritmetiği, new/delete, bellek hataları, dizi genişletme.</span></li>
       <li><b>Listeler</b> <span>~30 dk</span><br><span style="color:var(--muted)">List ADT, insertFront/deleteFirst/print kodları.</span></li>
+      <li><b>Çift ve Dairesel Listeler</b> <span>~30 dk</span><br><span style="color:var(--muted)">Araya ekleme/silme adımları, ters çevirme, DLL'de prev bağları, dairesel dolaşma.</span></li>
       <li><b>Karma test</b> <span>~30 dk</span><br><span style="color:var(--muted)">Test → Tümü → 30 soru. Sonra “Yanlışlarım” ile tekrar.</span></li>
     </ol>
   </div>
@@ -497,6 +498,181 @@ Student* students = new Student[3]; ... delete[] students;   // nesne dizisi</co
   <div class="topic-actions">
     <a class="btn primary" href="#test" data-quiz="list">Listeler testini çöz</a>
     <button class="btn" data-done="list">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ ÇİFT VE DAİRESEL LİSTELER ============ -->
+<article class="view" id="v-cift-dairesel" hidden data-topic="dll">
+  <div class="eyebrow" style="margin-top:14px">Ders 3 · Linked List, Doubly, Circular</div>
+  <h2>Bağlı liste işlemleri, çift bağlı ve dairesel listeler</h2>
+  <nav class="toc">
+    <a href="#d-dizi">Dizi vs liste</a><a href="#d-dugum">Düğüm</a><a href="#d-turler">3 tür</a><a href="#d-dolas">Dolaşma</a><a href="#d-ekle">Ekleme</a><a href="#d-sil">Silme</a><a href="#d-ters">Ters çevirme</a><a href="#d-dll">Çift bağlı</a><a href="#d-dai">Dairesel</a>
+  </nav>
+
+  <h3 id="d-dizi">Dizi mi bağlı liste mi?</h3>
+  <p>Bağlı listenin temel özellikleri: ilk düğümü gösteren bir <b>header/head</b> pointer'ı vardır. Ardışık düğümler pointer'larla bağlanır ve <b>son eleman nullptr'ı gösterir</b>. Çalışma sırasında büyüyüp küçülebilir, gerektiği kadar uzun olur ve <b>yalnızca ihtiyaç kadar bellek</b> kullanır.</p>
+  <div class="tbl"><table>
+    <tr><th></th><th>Dizi</th><th>Bağlı liste</th></tr>
+    <tr><td>Bellek</td><td>Ardışık (contiguous)</td><td>Ardışık olmayan; komşuluk pointer ile</td></tr>
+    <tr><td>Yapı</td><td>Statik (dinamik ayırma yoksa)</td><td>Esasen dinamik</td></tr>
+    <tr><td>Uygun olduğu işler</td><td>Sona ekleme/silme, <b>rastgele erişim</b>, arama</td><td><b>Herhangi bir konuma</b> ekleme ve silme, <b>sıralı erişim</b>, eleman sayısının önceden bilinmediği durumlar</td></tr>
+  </table></div>
+
+  <h3 id="d-dugum">Düğüm tanımı</h3>
+  <pre><code>struct node {             // C tarzı
+    int data;             // veri
+    struct node *next;    // sonraki düğüm
+};
+
+class Node {              // C++ tarzı
+public:
+    int data;
+    Node *next;
+    Node(int dat) : data(dat), next(nullptr) {}
+};</code></pre>
+  <p>Aynı yapı türünü gösteren bir üye içeren yapılara <b>öz-referanslı (self-referential) yapı</b> denir.</p>
+
+  <h3 id="d-turler">Bağlı liste türleri</h3>
+  <div class="tbl"><table>
+    <tr><th>Tür</th><th>Bağlantı</th><th>Liste sonu</th></tr>
+    <tr><td><b>Tek bağlı</b> (singly)</td><td>Her düğüm sadece sonrakini gösterir; head ilk düğümü gösterir</td><td>Son düğümün next'i <code>nullptr</code></td></tr>
+    <tr><td><b>Çift bağlı</b> (doubly, DLL)</td><td>Komşular arasında iki yönde pointer (next, prev); genelde <b>head ve tail</b> tutulur</td><td>İlk düğümün prev'i ve son düğümün next'i <code>nullptr</code></td></tr>
+    <tr><td><b>Dairesel</b> (circular)</td><td>Son düğüm tekrar <b>ilk düğümü</b> gösterir; tek veya çift bağlı olabilir</td><td><code>nullptr</code> yok, bir çember oluşur</td></tr>
+  </table></div>
+  <p>Tek bağlı listede yapılan işlemler: dolaşma (yazdırma, minimum bulma), düğüm ekleme ve silme (baştan, sondan, herhangi bir konumdan), iki listeyi karşılaştırma, iki listeyi birleştirme, ters çevirme ve sıralama.</p>
+
+  <h3 id="d-dolas">Dolaşma (traversal)</h3>
+  <p>header'dan başla, pointer'ları takip et, her düğümün içeriğini yaz. <b>next nullptr olunca dur.</b></p>
+  <pre><code>void traverseList() {
+    Node *walk = header;
+    while (walk != nullptr) {
+        cout &lt;&lt; walk-&gt;data;   // düğümün verisini yaz
+        walk = walk-&gt;next;     // bir sonraki düğüme geç
+    }
+}</code></pre>
+
+  <h3 id="d-ekle">Tek bağlı listeye ekleme</h3>
+  <p>Her eklemede yeni düğüm oluşturulur, header'dan başlanır ve bağlantılar düzenlenir.</p>
+  <h4>1) Başa ekleme</h4>
+  <pre><code>Node *newNode = new Node(x);   // Adım 1: yeni düğüm
+newNode-&gt;next = head;           // Adım 2: yeni düğüm eski head'i göstersin
+head = newNode;                 // Adım 3: head artık yeni düğüm</code></pre>
+  <h4>2) Sona ekleme</h4>
+  <pre><code>Node *newNode = new Node(x);
+newNode-&gt;next = nullptr;              // Adım 1: yeni düğüm son olacak
+Node *last = head;
+while (last-&gt;next != nullptr)         // Adım 2: son düğüme kadar git
+    last = last-&gt;next;
+last-&gt;next = newNode;                 //         sonu yeni düğüme bağla</code></pre>
+  <h4>3) n. konuma ekleme</h4>
+  <pre><code>// temp = (n-1). düğüm (oraya kadar dolaş)
+newNode-&gt;next = temp-&gt;next;   // Adım 2: yeni düğüm (n+1). düğümü göstersin
+temp-&gt;next   = newNode;       // Adım 3: (n-1). düğüm yeni düğümü göstersin</code></pre>
+  <div class="trap"><b>Tuzak:</b> Bu iki satırın sırası ters yazılırsa (<code>temp-&gt;next = newNode</code> önce), <code>temp-&gt;next</code>'in eski değeri kaybolur. <code>newNode-&gt;next = temp-&gt;next</code> artık newNode'un kendisini gösterir ve listenin geri kalanı kaybolur. <b>Önce yeni düğümü bağla, sonra eski bağlantıyı değiştir.</b></div>
+
+  <h3 id="d-sil">Tek bağlı listeden silme</h3>
+  <p>Silinen düğümün belleği <code>delete</code> (C'de <code>free()</code>) ile serbest bırakılmalıdır. Bu <b>programcının sorumluluğudur</b>. Yapılmazsa ne programcının ne de sistemin kullanabildiği, boşa giden bellek kalır (slayt bunu dangling pointer olarak adlandırıyor). Serbest bırakılan belleğin içeriği, üzerine başka veri yazılana kadar silinmez.</p>
+  <h4>1) Baştan silme</h4>
+  <pre><code>Node *toDelete = head;    // Adım 1: ilk düğümün adresini sakla
+head = head-&gt;next;        // Adım 2: head'i ikinci düğüme taşı
+                          // Adım 3: ilk ve ikinci düğüm arasındaki bağı kopar
+delete toDelete;          // Adım 4: belleği serbest bırak</code></pre>
+  <h4>2) Sondan silme</h4>
+  <pre><code>Node *toDelete = head, *secondLastNode = head;
+while (toDelete-&gt;next != nullptr) {      // Adım 1: sona git, bir öncekini tut
+    secondLastNode = toDelete;
+    toDelete = toDelete-&gt;next;
+}
+if (toDelete == head) head = nullptr;    // Adım 2: tek düğüm varsa liste boşalır
+else secondLastNode-&gt;next = nullptr;     //         yoksa sondan bir öncekini kopar
+delete toDelete;                         // Adım 3: belleği serbest bırak</code></pre>
+  <h4>3) n. konumdan silme</h4>
+  <pre><code>// prevNode = (n-1). düğüm, toDelete = n. düğüm
+prevNode-&gt;next = toDelete-&gt;next;   // Adım 2: (n-1)'i (n+1)'e bağla
+delete toDelete;                   // Adım 3: n. düğümü serbest bırak</code></pre>
+  <div class="key"><b>Karşılaştırma:</b> İki bağlı liste <b>aynı veriye ve aynı sıraya</b> sahipse özdeştir. Sıra farklı ama değerler aynı olabilir (5→4→3→2→1 ve 1→2→3→4→5).<br><b>Sıralama:</b> Bağlı liste eklemeli, seçmeli, birleştirmeli, hızlı veya kabarcık sıralama ile sıralanabilir. Slaytta <b>eklemeli sıralama (insertion sort)</b> ele alınıyor.</div>
+
+  <h3 id="d-ters">Listeyi ters çevirme (iteratif)</h3>
+  <p>İki yolu var: <b>iteratif</b> ve <b>özyinelemeli</b>. Slayttaki iteratif adımlar (en az 2 düğüm varsayılır):</p>
+  <pre><code>Node *prevNode = head;        // Adım 1: prevNode = ilk düğüm
+head = head-&gt;next;
+Node *curNode = head;         //         curNode = ikinci düğüm
+prevNode-&gt;next = nullptr;     // Adım 2: ilk düğüm son olacak, bağını kopar
+
+while (head != nullptr) {     // Adım 6: head nullptr olana kadar 3-5
+    head = head-&gt;next;        // Adım 3: head bir ileri
+    curNode-&gt;next = prevNode; // Adım 4: mevcut düğümü öncekine bağla
+    prevNode = curNode;       // Adım 5: prevNode ve curNode bir ileri
+    curNode = head;
+}
+head = prevNode;              // Adım 7: son düğüm yeni ilk düğüm</code></pre>
+  <p>Örnek: A → B → C → nullptr ters çevrilince C → B → A → nullptr olur. head C'yi gösterir, <code>A-&gt;next == nullptr</code>.</p>
+  <div class="trap"><b>Tuzak:</b> Döngüden sonra <code>head = prevNode</code> unutulursa head nullptr kalır ve liste kaybolur. Adım 2'de <code>prevNode-&gt;next = nullptr</code> yapılmazsa A ile B birbirini gösterir ve döngü oluşur.</div>
+
+  <h3 id="d-dll">Çift bağlı liste (DLL)</h3>
+  <p>Her düğümün <b>üç alanı</b> vardır: veri, <b>next</b> (sonraki), <b>prev</b> (önceki). Her iki yönde dolaşılabildiği için <b>çift yönlü bağlı liste</b> de denir. Genelde hem <b>head</b> hem <b>tail</b> tutulur.</p>
+  <pre><code>class Node {
+public:
+    int data;  Node* next;  Node* prev;
+    Node() : data(0), next(nullptr), prev(nullptr) {}
+    Node(int value) : data(value), next(nullptr), prev(nullptr) {}
+};
+class DoublyLinkedList {
+public:
+    Node* head;  Node* tail;
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+    ~DoublyLinkedList() {                 // belleği serbest bırak
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current-&gt;next;   // ÖNCE sonrakini sakla
+            delete current;               // SONRA sil
+            current = next;
+        }
+    }
+};</code></pre>
+  <div class="tbl"><table>
+    <tr><th>Tek bağlıya göre avantaj</th><th>Tek bağlıya göre dezavantaj</th></tr>
+    <tr><td>İleri ve geri yönde dolaşılabilir</td><td>Her düğüm prev için <b>ek alan</b> ister</td></tr>
+    <tr><td>Silinecek düğümün pointer'ı verildiğinde <b>silme daha verimlidir</b> (öncekini aramaya gerek yok)</td><td>Tüm işlemlerde <b>prev pointer'ının da güncellenmesi</b> gerekir</td></tr>
+  </table></div>
+  <h4>DLL'de n. konuma ekleme (7 adım)</h4>
+  <pre><code>// Adım 1: (N-1). düğüme kadar ilerle → temp
+Node* newNode = new Node(x);            // Adım 2: yeni düğüm, veri ata
+newNode-&gt;next = temp-&gt;next;             // Adım 3: yeni → sonraki
+newNode-&gt;prev = temp;                   // Adım 4: yeni ← temp
+if (temp-&gt;next != nullptr)              // Adım 5: sonraki varsa onun prev'i yeniyi göstersin
+    temp-&gt;next-&gt;prev = newNode;
+temp-&gt;next = newNode;                   // Adım 6: temp → yeni   (EN SON)
+// Adım 7: liste hazır: temp ⇄ newNode ⇄ eski temp-&gt;next</code></pre>
+  <div class="trap"><b>Tuzak:</b> Adım 6 (<code>temp-&gt;next = newNode</code>) en son yapılır. Önce yapılırsa eski sonraki düğümün adresi kaybolur. Adım 5'teki <code>nullptr</code> kontrolü sona eklemede çökmeyi önler. Bir DLL eklemesinde toplam <b>4 pointer</b> güncellenir.</div>
+
+  <h3 id="d-dai">Dairesel bağlı liste</h3>
+  <ul>
+    <li>Son düğüm <b>ilk düğümü</b> gösterir; listeyi sonlandıran <code>nullptr</code> yoktur.</li>
+    <li>Başlangıç veya bitiş düğümü yoktur; liste <b>herhangi bir düğümden</b> başlanarak dolaşılabilir.</li>
+    <li>Dolaşmak için başlangıç düğümüne <b>yeniden ulaşana kadar</b> bir tur atılır.</li>
+    <li>Tek bağlı veya çift bağlı olarak uygulanabilir.</li>
+  </ul>
+  <pre><code>void traverseCircular(Node* head) {
+    if (head == nullptr) return;
+    Node* walk = head;
+    do {
+        cout &lt;&lt; walk-&gt;data &lt;&lt; " ";
+        walk = walk-&gt;next;
+    } while (walk != head);        // başa dönünce dur
+}</code></pre>
+  <div class="trap"><b>Tuzak:</b> Dairesel listede <code>while (walk != nullptr)</code> kullanılırsa <b>sonsuz döngü</b> olur, çünkü nullptr hiç gelmez. Koşul “başlangıç düğümüne döndü mü” olmalıdır.</div>
+  <div class="tbl"><table>
+    <tr><th>Avantaj</th><th>Dezavantaj</th></tr>
+    <tr><td>Tüm liste herhangi bir düğümden dolaşılabilir</td><td>Tek bağlı listeden daha karmaşıktır</td></tr>
+    <tr><td>Çember veya döngü şeklinde erişim gereken durumlar için uygundur</td><td>Ters çevirmek tek ve çift bağlı listelerden daha karmaşıktır</td></tr>
+    <tr><td>Tek bağlı dairesel olsa bile önceki düğüme (tur atarak) ulaşılabilir</td><td>Dikkatli dolaşılmazsa <b>sonsuz döngü</b></td></tr>
+    <tr><td></td><td>Doğrudan erişimi desteklemez</td></tr>
+  </table></div>
+  <p>Dairesel listede işlemler: oluşturma, dolaşma, başa ve araya ekleme, ilk/ortadaki/son düğümü silme, düğüm sayısını bulma ve ters çevirme.</p>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="dll">Bu konunun testini çöz</a>
+    <button class="btn" data-done="dll">Bitirdim olarak işaretle</button>
   </div>
 </article>
 
@@ -994,6 +1170,8 @@ const TOPICS = {
           svg:'<rect x="2" y="12" width="18" height="16" rx="3"/><path d="M20 20h14"/><path d="M30 15l5 5-5 5"/><rect x="37" y="12" width="17" height="16" rx="3"/>'},
   list:  {name:"Listeler", sub:"List ADT, bağlı liste kodları", view:"liste", lec:"Ders 2 · 63 slayt",
           svg:'<rect x="1" y="13" width="14" height="14" rx="2"/><path d="M15 20h5"/><rect x="20" y="13" width="14" height="14" rx="2"/><path d="M34 20h5"/><rect x="39" y="13" width="14" height="14" rx="2"/>'},
+  dll:   {name:"Çift & Dairesel", sub:"Ekle/sil adımları, ters çevirme, DLL", view:"cift-dairesel", lec:"Ders 3 · 61 slayt",
+          svg:'<rect x="1" y="12" width="14" height="16" rx="2"/><path d="M15 17h5M20 23h-5"/><rect x="20" y="12" width="14" height="16" rx="2"/><path d="M34 17h5M39 23h-5"/><rect x="39" y="12" width="14" height="16" rx="2"/><path d="M46 28v8H8v-8"/>'},
   stack: {name:"Yığınlar", sub:"LIFO, postfix, parantez, N-Vezir", view:"yigin", lec:"Ders 4 · 95 slayt",
           svg:'<rect x="16" y="28" width="24" height="9" rx="2"/><rect x="16" y="17" width="24" height="9" rx="2"/><rect x="16" y="6" width="24" height="9" rx="2"/><path d="M46 4v12M43 7l3-3 3 3"/>'},
   queue: {name:"Kuyruklar", sub:"FIFO, front/rear, dairesel dizi", view:"kuyruk", lec:"Ders 5 · 72 slayt",
@@ -1255,7 +1433,59 @@ const Q = [
 {t:"rec", q:"mid = first + (last - first) / 2 ifadesi (first + last) / 2 ile karşılaştırıldığında ne sağlar?", o:["Aynı sonucu verir ama büyük indekslerde toplama taşmasını önler","Farklı bir orta nokta seçer","Sadece çift boyutta çalışır","Daha yavaştır, avantajı yoktur"], a:0,
  e:"Matematiksel olarak aynı orta noktayı verir; first + last int sınırını aşabilecekken bu yazım taşmayı önler."},
 {t:"rec", q:"binarySearch2 sürümünde sağ yarı için yapılan çağrı hangisidir?", o:["binarySearch2(a, mid, last, target)","binarySearch2(a, mid+1, last, target)","binarySearch2(a, first, mid, target)","binarySearch2(a, mid-1, last, target)"], a:0, mono:true,
- e:"binarySearch2'de temel durum first == last'tır ve target < a[mid] değilse mid de aralığa dahil edilir: (a, mid, last, target)."}
+ e:"binarySearch2'de temel durum first == last'tır ve target < a[mid] değilse mid de aralığa dahil edilir: (a, mid, last, target)."},
+
+/* ===== ÇİFT VE DAİRESEL LİSTELER (Ders 3) — sona eklendi, eski soru kimlikleri korunur ===== */
+{t:"dll", q:"Çift bağlı listenin (DLL) her düğümü kaç alandan oluşur?", o:["3: veri, next, prev","2: veri, next","2: next, prev","4: veri, next, prev, head"], a:0,
+ e:"DLL düğümü: veri + sonraki düğüme pointer (next) + önceki düğüme pointer (prev)."},
+{t:"dll", q:"Hangisi çift bağlı listenin tek bağlı listeye göre AVANTAJIDIR?", o:["Silinecek düğümün pointer'ı verildiğinde silme daha verimlidir","Her düğüm daha az bellek kullanır","İşlemlerde daha az pointer güncellenir","Elemanlara doğrudan (indeksle) erişilir"], a:0,
+ e:"DLL iki yönde dolaşılabilir ve silinecek düğümün pointer'ı biliniyorsa önceki düğüm prev ile bulunduğundan silme daha verimlidir. Ek prev alanı ve fazladan güncelleme ise dezavantajlarıdır."},
+{t:"dll", q:"Hangisi çift bağlı listenin tek bağlı listeye göre DEZAVANTAJIDIR?", o:["Her düğüm prev için ek alan ister ve tüm işlemlerde prev de güncellenmelidir","Sadece ileri yönde dolaşılabilir","Silme işlemi her zaman daha yavaştır","Son düğüm nullptr içeremez"], a:0,
+ e:"Slayt: DLL'nin her düğümü önceki işaretçi için ek alan gerektirir ve tüm işlemlerde önceki işaretçisinin de tutulması gerekir."},
+{t:"dll", q:"Dairesel bağlı listede son düğümün next pointer'ı neyi gösterir?", o:["Listenin ilk düğümünü","nullptr","Kendisini","Sondan bir önceki düğümü"], a:0,
+ e:"Dairesel listede liste sonunu belirten nullptr yoktur; son düğüm ilk düğümü göstererek bir çember oluşturur."},
+{t:"dll", q:"Dairesel bağlı listede aşağıdaki döngü ne olur?", c:"Node* walk = head;\nwhile (walk != nullptr) {\n  cout << walk->data;\n  walk = walk->next;\n}", o:["Sonsuz döngü","Liste bir kez yazdırılır","Hiçbir şey yazdırılmaz","Sadece ilk düğüm yazdırılır"], a:0, mono:true,
+ e:"Dairesel listede nullptr hiç gelmez, walk sürekli dönmeye devam eder. Doğru koşul başlangıç düğümüne dönmektir: do { … } while (walk != head);"},
+{t:"dll", q:"Dairesel liste A → B → C → (A). B'den başlayıp do-while ile (walk != start) dolaşılırsa çıktı nedir?", o:["B C A","A B C","B C","B C A B"], a:0, mono:true,
+ e:"Dairesel listede herhangi bir düğümden başlanabilir. B yazılır, C yazılır, A yazılır; walk tekrar B olunca durur."},
+{t:"dll", q:"Tek bağlı listede n. konuma ekleme yaparken (temp = n−1. düğüm) doğru sıra hangisidir?", o:["newNode->next = temp->next;  temp->next = newNode;","temp->next = newNode;  newNode->next = temp->next;","newNode->next = temp;  temp->next = newNode;","temp = newNode;  newNode->next = temp->next;"], a:0, mono:true,
+ e:"Önce yeni düğüm (n+1). düğüme bağlanır, sonra (n−1). düğüm yeni düğüme bağlanır. Ters sırada temp->next'in eski değeri kaybolur ve newNode kendini gösterir."},
+{t:"dll", q:"Tek bağlı listede sona ekleme adımları hangisidir?", o:["newNode->next = nullptr; son düğüme kadar dolaş; lastNode->next = newNode","head = newNode; newNode->next = head","newNode->next = head; head'i sona taşı","Son düğümü sil, yerine newNode koy"], a:0,
+ e:"Slayt: Adım 1 yeni düğümün next'i nullptr. Adım 2 son düğüme kadar dolaş ve lastNode->next = newNode."},
+{t:"dll", q:"Tek bağlı listede son düğümü silerken neden secondLastNode tutulur?", o:["Sondan bir önceki düğümün next'ini nullptr yapabilmek için","Son düğümün verisini kopyalamak için","head'i güncellemek için","Listeyi ters çevirmek için"], a:0,
+ e:"Tek bağlı listede geri gidilemez. Sona giderken bir öncekini tutarsın; son düğüm silinince secondLastNode->next = nullptr yapılır. Son düğüm head ise head = nullptr olur."},
+{t:"dll", q:"Tek elemanlı listede son düğüm silinirse ne yapılmalıdır (slayt)?", o:["head = nullptr yapılır ve düğüm silinir","secondLastNode->next = nullptr yapılır","head->next = head yapılır","Hiçbir şey yapılmaz"], a:0,
+ e:"Adım 2: Son düğüm head ise head nullptr yapılır; değilse secondLastNode->next = nullptr. Ardından bellek serbest bırakılır."},
+{t:"dll", q:"Tek bağlı listede n. düğümü silmek için (prevNode = n−1, toDelete = n) hangi bağlantı kurulur?", o:["prevNode->next = toDelete->next;","toDelete->next = prevNode;","prevNode = toDelete->next;","prevNode->next = nullptr;"], a:0, mono:true,
+ e:"(n−1). düğüm doğrudan (n+1). düğüme bağlanır, sonra delete toDelete ile n. düğümün belleği serbest bırakılır."},
+{t:"dll", q:"Baştan silmede (toDelete = head; head = head->next;) sonra ne yapılmalıdır?", o:["delete toDelete; ile ilk düğümün belleği serbest bırakılmalı","head = toDelete; yapılmalı","toDelete->next = head; yapılmalı","Hiçbir şey; düğüm otomatik silinir"], a:0,
+ e:"Slayt: Adım 3 ilk ve ikinci düğüm arasındaki bağı kopar, Adım 4 ilk düğümün belleğini serbest bırak. Silinen düğümün belleğini serbest bırakmak programcının sorumluluğudur."},
+{t:"dll", q:"DLL'de n. konuma eklemede (temp = N−1. düğüm) hangi adım EN SON yapılmalıdır?", o:["temp->next = newNode;","newNode->next = temp->next;","newNode->prev = temp;","temp->next->prev = newNode;"], a:0, mono:true,
+ e:"Adım 3–5 eski temp->next bilgisini kullanır. temp->next = newNode (Adım 6) önce yapılırsa eski sonraki düğümün adresi kaybolur."},
+{t:"dll", q:"DLL'e araya eklemede şu satırda neden kontrol yapılır?", c:"if (temp->next != nullptr)\n    temp->next->prev = newNode;", o:["Sona ekleniyorsa temp->next nullptr'dır; nullptr->prev erişimi çökme yaratır","prev her zaman nullptr olmalıdır","Kontrol gereksizdir, sadece okunabilirlik içindir","newNode'un verisini kontrol etmek için"], a:0, mono:true,
+ e:"temp son düğümse sonrasında düğüm yoktur; nullptr üzerinden ->prev'e erişmek tanımsız davranıştır (çökme)."},
+{t:"dll", q:"DLL'in ortasına bir düğüm eklerken toplam kaç pointer güncellenir?", o:["4","2","3","1"], a:0,
+ e:"newNode->next, newNode->prev, sonraki düğümün prev'i ve temp->next. Tek bağlı listede ise 2 pointer (newNode->next ve temp->next) güncellenir."},
+{t:"dll", q:"Slayta göre dizi hangi işler için UYGUNDUR?", o:["Rastgele erişim ve sona ekleme/silme","Herhangi bir konuma ekleme","Eleman sayısının bilinmediği durumlar","Herhangi bir yerden silme"], a:0,
+ e:"Dizi: sona ekleme/silme, rastgele erişim, arama. Bağlı liste: herhangi bir konuma ekleme ve silme, sıralı erişim, eleman sayısının tahmin edilemediği durumlar."},
+{t:"dll", q:"Aynı yapı türünü gösteren bir üye alanı içeren yapıya ne denir?", o:["Öz-referanslı (self-referential) yapı","Soyut yapı","Dairesel yapı","Statik yapı"], a:0,
+ e:"struct node { int data; struct node *next; }; next aynı türü gösterdiği için node öz-referanslı yapıdır."},
+{t:"dll", q:"A → B → C → nullptr listesi ters çevrildikten sonra hangisi doğrudur?", o:["head C'yi gösterir ve A->next == nullptr","head A'yı gösterir ve C->next == nullptr","head C'yi gösterir ve C->next == nullptr","Liste dairesel olur"], a:0, mono:true,
+ e:"Sonuç C → B → A → nullptr. İlk düğüm (A) son düğüm olur ve next'i nullptr'dır (Adım 2: prevNode->next = nullptr)."},
+{t:"dll", q:"İteratif ters çevirmenin son adımı (Adım 7) nedir?", o:["head = prevNode;","head = curNode;","prevNode->next = nullptr;","curNode = head;"], a:0, mono:true,
+ e:"Döngü head nullptr olunca biter. O anda prevNode eski son düğümü (yeni ilk düğüm) gösterir; head = prevNode yapılmazsa liste kaybolur."},
+{t:"dll", q:"DoublyLinkedList yıkıcısında neden önce Node* next = current->next; yazılır?", c:"while (current != nullptr) {\n  Node* next = current->next;\n  delete current;\n  current = next;\n}", o:["delete'ten sonra current->next'e erişmek silinmiş belleğe erişim olur","next'i yazdırmak için","Listeyi ters çevirmek için","tail'i güncellemek için"], a:0, mono:true,
+ e:"Düğüm silindikten sonra current->next okunamaz (dangling). Sonraki adres silmeden önce saklanır."},
+{t:"dll", q:"Hangisi dairesel bağlı listenin DEZAVANTAJIDIR?", o:["Dikkatli dolaşılmazsa sonsuz döngüye girilebilir","Herhangi bir düğümden dolaşmaya başlanamaz","Önceki düğüme hiçbir şekilde ulaşılamaz","Sadece çift bağlı olarak yazılabilir"], a:0,
+ e:"Dezavantajlar: daha karmaşık, ters çevirmesi daha zor, sonsuz döngü riski, doğrudan erişim yok. Herhangi bir düğümden dolaşabilmek ve önceki düğüme tur atarak ulaşmak ise avantajdır."},
+{t:"dll", q:"Çift bağlı listede listeyi takip etmek için genellikle hangi iki pointer tutulur?", o:["head ve tail","head ve prev","front ve rear","top ve base"], a:0,
+ e:"Slayt: “Genellikle listeyi takip etmek için head ve tail olmak üzere iki işaretçi tutulur.” front/rear kuyruk, top/base yığın terimidir."},
+{t:"dll", q:"İki bağlı liste ne zaman özdeştir (slayt)?", o:["Aynı veriye ve aynı veri sıralamasına sahiplerse","Aynı uzunluktalarsa","Aynı değerlere herhangi bir sırada sahiplerse","Aynı head adresine sahiplerse"], a:0,
+ e:"Özdeşlik için hem veriler hem sıra aynı olmalıdır. 5→4→3→2→1 ile 1→2→3→4→5 aynı değerlere sahip ama özdeş değildir."},
+{t:"dll", q:"Slaytta bağlı listeyi sıralamak için hangi algoritma ele alınıyor?", o:["Eklemeli sıralama (insertion sort)","Hızlı sıralama (quick sort)","Birleştirmeli sıralama (merge sort)","Yığın sıralama (heap sort)"], a:0,
+ e:"Slayt; eklemeli, seçmeli, birleştirmeli, hızlı ve kabarcık sıralamayı sayar ama bağlı liste için eklemeli sıralamayı ele alır."},
+{t:"dll", q:"Dairesel bağlı liste hangi listeler kullanılarak uygulanabilir?", o:["Hem tek bağlı hem çift bağlı liste","Sadece tek bağlı liste","Sadece çift bağlı liste","Sadece dizi"], a:0,
+ e:"Slayt: Dairesel bağlı liste hem tek bağlı liste hem de çift bağlı liste kullanılarak uygulanabilir."}
 ];
 
 /* ---------- Ezber kartları ---------- */
@@ -1307,7 +1537,17 @@ const CARDS = [
 ["rec","33 araması mid sırası","4 (32) → 7 (54) → 5 (33) ✓"],
 ["rec","Tail recursion","Özyinelemeli çağrı fonksiyonun son işlemi. writeBackward evet; fact hayır."],
 ["rec","Özyineleme verimsizliği","Fonksiyon çağrısı ek yükü + algoritmanın doğasındaki verimsizlik."],
-["rec","Kutu izi","Her kutu ≈ bir activation record. Çağrıları etiketle, ok çiz, dönüşte üstünü çiz."]
+["rec","Kutu izi","Her kutu ≈ bir activation record. Çağrıları etiketle, ok çiz, dönüşte üstünü çiz."],
+["dll","Bağlı liste türleri (3)","Tek bağlı: son → nullptr\nÇift bağlı: next + prev, head ve tail\nDairesel: son düğüm ilk düğümü gösterir"],
+["dll","Araya ekleme (tek bağlı)","temp = (n−1). düğüm\nnewNode->next = temp->next;\ntemp->next = newNode;"],
+["dll","Sona ekleme (tek bağlı)","newNode->next = nullptr;\nson düğüme dolaş;\nlastNode->next = newNode;"],
+["dll","Sondan silme","Sona giderken secondLastNode'u tut.\nTek düğümse head = nullptr,\ndeğilse secondLastNode->next = nullptr;\ndelete son düğüm."],
+["dll","n. konumdan silme","prevNode->next = toDelete->next;\ndelete toDelete;"],
+["dll","İteratif ters çevirme","prev = head; head = head->next; cur = head; prev->next = nullptr;\nwhile (head) { head = head->next; cur->next = prev; prev = cur; cur = head; }\nhead = prev;"],
+["dll","DLL'e araya ekleme (4 pointer)","newNode->next = temp->next;\nnewNode->prev = temp;\nif (temp->next) temp->next->prev = newNode;\ntemp->next = newNode;  ← en son"],
+["dll","DLL avantaj / dezavantaj","+ İki yönde dolaşma, pointer'ı verilen düğümü silme daha verimli\n− prev için ek alan, her işlemde prev güncellemesi"],
+["dll","Dairesel listeyi dolaşma","do { yaz; walk = walk->next; } while (walk != head);\nwhile (walk != nullptr) → sonsuz döngü!"],
+["dll","Dizi vs bağlı liste ne için uygun?","Dizi: rastgele erişim, sona ekle/sil, arama\nBağlı liste: her yere ekle/sil, sıralı erişim, eleman sayısı bilinmiyorsa"]
 ];
 
 /* ---------- Kalıcı durum (sadece bu tarayıcıda) ---------- */
@@ -1428,7 +1668,7 @@ function startQuiz(pool){
 $("#startQuiz").addEventListener("click", ()=>startQuiz(poolFor(selTopic)));
 function showQ(){
   const q = quiz.qs[quiz.i];
-  $("#qTopic").textContent = TOPICS[q.t].name.toUpperCase();
+  $("#qTopic").textContent = TOPICS[q.t].name.toLocaleUpperCase("tr-TR");
   $("#qCount").textContent = (quiz.i+1) + " / " + quiz.qs.length;
   $("#qBar").style.width = (100*quiz.i/quiz.qs.length) + "%";
   $("#qText").textContent = q.q;
