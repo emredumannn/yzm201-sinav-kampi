@@ -1,0 +1,1643 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="YZM201">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#EDF0F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E141A" media="(prefers-color-scheme: dark)">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px;font-family:system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>YZM201 Sınav Kampı</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: tek sütun mobil uygulama — yapışkan başlık, kaydırılan içerik, alt sekme çubuğu. Motif: bellek hücreleri ve işaretçi okları. */
+:root{
+  --bg:#EDF0F3; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6774; --line:#D3DAE1;
+  --accent:#0B7A63; --accent-ink:#FFFFFF; --addr:#B07800; --addr-bg:#FFF3D6;
+  --code-bg:#E6EBEF; --ok:#1B8A4B; --ok-bg:#E2F4E9; --bad:#C2372D; --bad-bg:#FBE6E4;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --r:12px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E141A; --surface:#161F28; --ink:#E5ECF2; --muted:#98A6B3; --line:#283441;
+  --accent:#39C3A0; --accent-ink:#06231C; --addr:#F2C14E; --addr-bg:#2E2610;
+  --code-bg:#0A1016; --ok:#47C47D; --ok-bg:#12291C; --bad:#F06B60; --bad-bg:#2E1513; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E141A; --surface:#161F28; --ink:#E5ECF2; --muted:#98A6B3; --line:#283441;
+  --accent:#39C3A0; --accent-ink:#06231C; --addr:#F2C14E; --addr-bg:#2E2610;
+  --code-bg:#0A1016; --ok:#47C47D; --ok-bg:#12291C; --bad:#F06B60; --bad-bg:#2E1513; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 calc(84px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  padding-block:12px 10px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+header.top .back{display:none;border:0;background:var(--surface);color:var(--ink);width:38px;height:38px;border-radius:10px;font-size:20px;line-height:1;cursor:pointer;flex:none}
+header.top.sub .back{display:block}
+header.top h1{font:800 21px/1.1 var(--f-display);font-stretch:85%;margin:0;letter-spacing:-.01em;min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .pill{font:600 12px var(--f-mono);color:var(--addr);background:var(--addr-bg);padding:4px 8px;border-radius:999px;flex:none}
+h2{font:800 26px/1.15 var(--f-display);font-stretch:85%;margin:22px 0 8px;text-wrap:balance}
+h3{font:700 19px/1.25 var(--f-display);font-stretch:90%;margin:26px 0 8px;text-wrap:balance}
+h4{font:600 15px/1.3 var(--f-body);margin:16px 0 6px}
+p{margin:8px 0}
+.muted{color:var(--muted)}
+.eyebrow{font:600 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--addr)}
+code,kbd{font:500 .9em var(--f-mono);background:var(--code-bg);padding:1px 5px;border-radius:5px}
+pre{background:var(--code-bg);border-radius:10px;padding:12px 14px;overflow-x:auto;font:13px/1.55 var(--f-mono);margin:10px 0;-webkit-overflow-scrolling:touch}
+pre code{background:none;padding:0;font-size:inherit}
+ul,ol{padding-left:22px;margin:8px 0}
+li{margin:4px 0}
+table{border-collapse:collapse;font-size:14px;width:100%}
+.tbl{overflow-x:auto;margin:10px 0;border:1px solid var(--line);border-radius:10px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;background:var(--code-bg)}
+tr:last-child td{border-bottom:0}
+td.mono,th.mono{font-family:var(--f-mono);font-size:13px;white-space:nowrap}
+.trap{border-left:4px solid var(--bad);background:var(--bad-bg);padding:10px 12px;border-radius:0 10px 10px 0;margin:12px 0}
+.trap b:first-child{color:var(--bad)}
+.key{border-left:4px solid var(--accent);background:var(--surface);padding:10px 12px;border-radius:0 10px 10px 0;margin:12px 0}
+.view[hidden]{display:none!important}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Ana sayfa */
+.hero{padding-block:18px 4px}
+.hero h2{font-size:30px;margin:4px 0 6px}
+.countdown{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;flex:1 1 90px;min-width:0}
+.stat b{display:block;font:800 24px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--muted)}
+.topics{display:grid;gap:10px;margin-top:16px}
+.tcard{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:left;cursor:pointer;width:100%}
+.tcard:active{transform:scale(.99)}
+.tcard svg{width:56px;height:40px}
+.tcard .tt{font:700 17px/1.2 var(--f-display);font-stretch:90%}
+.tcard .ts{font-size:13px;color:var(--muted);margin-top:2px}
+.tcard .meta{text-align:right;font:600 12px var(--f-mono);color:var(--muted);white-space:nowrap}
+.tcard .meta .done{color:var(--ok)}
+.bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:6px;grid-column:2/4}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:4px 14px;margin-top:16px}
+.plan ol{padding-left:20px}
+.plan li{margin:8px 0}
+.plan li span{font:600 12px var(--f-mono);color:var(--addr)}
+
+/* Konu sayfası */
+.toc{display:flex;gap:6px;overflow-x:auto;padding:10px 0 4px;margin:0 -2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.toc::-webkit-scrollbar{display:none}
+.toc a{flex:none;font-size:13px;padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;white-space:nowrap}
+.topic-actions{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 8px}
+.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:600;cursor:pointer;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.45;cursor:default}
+.mem{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:10px 0;font:13px var(--f-mono)}
+.cell{border:1.5px solid var(--ink);border-radius:6px;padding:6px 9px;min-width:40px;text-align:center;background:var(--surface)}
+.cell small{display:block;font-size:10px;color:var(--addr)}
+.arrow{color:var(--addr);font-weight:700}
+
+/* Test */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-top:12px}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font:600 12px var(--f-mono);color:var(--muted)}
+.qprog{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin:8px 0 12px}
+.qprog i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.qtext{font-size:17px;font-weight:500;margin:4px 0 8px}
+.opts{display:grid;gap:8px;margin-top:10px}
+.opt{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;font-size:15px;min-width:0}
+.opt .l{font:600 13px var(--f-mono);width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.opt.mono .t{font-family:var(--f-mono);font-size:14px}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.right .l{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt.wrong .l{background:var(--bad);color:#fff;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.explain{margin-top:12px;padding:12px;border-radius:10px;background:var(--bg);border:1px dashed var(--line);font-size:15px;white-space:pre-wrap}
+.explain b{display:block;margin-bottom:4px}
+.explain.ok b{color:var(--ok)} .explain.no b{color:var(--bad)}
+.qnav{display:flex;gap:8px;margin-top:12px}
+.qnav .btn{flex:1}
+.result-big{font:800 56px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.rows{display:grid;gap:6px;margin-top:10px}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:14px;border-bottom:1px solid var(--line);padding:6px 0}
+.row:last-child{border-bottom:0}
+.row span:last-child{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Kartlar */
+.flash{perspective:1000px;margin-top:12px}
+.fcard{position:relative;min-height:240px;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}
+.fcard.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:auto}
+.face.back{transform:rotateY(180deg);border-color:var(--accent)}
+.face .q{font:700 20px/1.3 var(--f-display);font-stretch:90%}
+.face .a{font-size:15.5px;white-space:pre-wrap}
+.face .hint{position:absolute;bottom:10px;right:14px;font:600 11px var(--f-mono);color:var(--muted)}
+
+/* Araçlar */
+.tool{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-top:14px}
+.tool h3{margin-top:0}
+.inrow{display:flex;gap:8px;flex-wrap:wrap}
+.inrow input{flex:1 1 180px;min-width:0;font:15px var(--f-mono);padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.out{font:600 16px var(--f-mono);margin-top:10px;padding:10px 12px;background:var(--code-bg);border-radius:10px;overflow-wrap:anywhere}
+.cq{display:grid;gap:6px;margin:12px 0}
+.cq .cells{display:flex;gap:6px;flex-wrap:wrap}
+.cq .c{width:50px;text-align:center;font:600 14px var(--f-mono)}
+.cq .c .v{border:1.5px solid var(--ink);border-radius:8px;height:42px;display:grid;place-items:center;background:var(--bg)}
+.cq .c .v.on{background:var(--addr-bg);border-color:var(--addr)}
+.cq .c .i{font-size:11px;color:var(--muted);margin-top:2px}
+.cq .c .m{font-size:10.5px;color:var(--accent);min-height:14px}
+.log{font:12.5px/1.5 var(--f-mono);color:var(--muted);max-height:140px;overflow:auto;margin-top:8px}
+
+/* Alt sekme çubuğu */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:600;border-radius:10px}
+nav.tabs a svg{width:24px;height:24px}
+nav.tabs a[aria-current="page"]{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top" id="topbar">
+  <button class="back" id="backBtn" aria-label="Geri">‹</button>
+  <h1 id="barTitle">YZM201 Sınav Kampı</h1>
+  <span class="pill" id="barPill">0x00</span>
+</header>
+
+<!-- ============ ANA SAYFA ============ -->
+<main class="view" id="v-konular">
+  <section class="hero">
+    <div class="eyebrow">YZM201 · Veri Yapıları · Vize</div>
+    <h2>Beş ders, tek gece</h2>
+    <p class="muted">Pointers, Listeler, Yığınlar, Kuyruklar ve Özyineleme. Anlatımlar doğrudan hocanın slaytlarından çıkarıldı; sınavda soru olmaya en yatkın yerler <b style="color:var(--bad)">Tuzak</b> kutularında.</p>
+    <div class="countdown">
+      <div class="stat"><b id="stQ">0</b><span>soru bankası</span></div>
+      <div class="stat"><b id="stDone">0</b><span>çözülen soru</span></div>
+      <div class="stat"><b id="stPct">–</b><span>doğru oranı</span></div>
+    </div>
+  </section>
+  <div class="topics" id="topicList"></div>
+  <div class="plan">
+    <h3>Bu gece için çalışma sırası</h3>
+    <ol>
+      <li><b>Yığınlar</b> <span>~45 dk</span><br><span class="muted" style="font:inherit;color:var(--muted)">Infix→postfix ve postfix hesaplama neredeyse kesin sorulur. Araçlar sekmesinde kendi ifadelerini adım adım çöz.</span></li>
+      <li><b>Kuyruklar</b> <span>~30 dk</span><br><span style="color:var(--muted)">enqueue/dequeue izleme, front/rear indeksleri, dairesel dizi ve <code>(i+1)%max</code>.</span></li>
+      <li><b>Özyineleme</b> <span>~35 dk</span><br><span style="color:var(--muted)">fact, power, writeVertical, writeBackward, ikili arama izleri. Çıktı sorusu gelir.</span></li>
+      <li><b>Pointers</b> <span>~35 dk</span><br><span style="color:var(--muted)">Pointer aritmetiği, new/delete, bellek hataları, dizi genişletme.</span></li>
+      <li><b>Listeler</b> <span>~30 dk</span><br><span style="color:var(--muted)">List ADT, insertFront/deleteFirst/print kodları.</span></li>
+      <li><b>Karma test</b> <span>~30 dk</span><br><span style="color:var(--muted)">Test → Tümü → 30 soru. Sonra “Yanlışlarım” ile tekrar.</span></li>
+    </ol>
+  </div>
+</main>
+
+<!-- ============ POINTERS ============ -->
+<article class="view" id="v-pointer" hidden data-topic="ptr">
+  <div class="eyebrow" style="margin-top:14px">Ders 1 · Pointers (İşaretçiler)</div>
+  <h2>Adresler, new/delete ve bellek hataları</h2>
+  <nav class="toc">
+    <a href="#p-temel">Temel</a><a href="#p-aritmetik">Aritmetik</a><a href="#p-dizi">Diziler</a><a href="#p-bellek">Bellek bölgeleri</a><a href="#p-new">new / delete</a><a href="#p-hata">Hatalar</a><a href="#p-kopya">Sığ/Derin kopya</a><a href="#p-genis">Dizi genişletme</a><a href="#p-adt">ADT</a>
+  </nav>
+
+  <h3 id="p-temel">Pointer nedir?</h3>
+  <p><b>Pointer</b>, başka bir nesnenin <b>bellek adresini</b> tutan değişkendir. <code>p</code>, <code>q</code>'nun adresini tutuyorsa “p, q'yu işaret ediyor” denir. <code>q</code> bellekte 100 adresindeyse <code>p</code>'nin değeri 100'dür.</p>
+  <div class="mem">
+    <div class="cell"><small>p @ 200</small>100</div><span class="arrow">──►</span><div class="cell"><small>q @ 100</small>75</div>
+  </div>
+  <pre><code>dataType *identifier;      // genel sözdizimi
+int *p;   char *ch;          // * değişken adına yapıştırılır (tercih)
+
+int x = 75;
+cout &lt;&lt; x;     // 75
+cout &lt;&lt; &amp;x;    // x'in adresi, ör. 0x7fff8164</code></pre>
+  <div class="tbl"><table>
+    <tr><th>Operatör</th><th>Adı</th><th>Ne yapar</th></tr>
+    <tr><td class="mono">&amp;x</td><td>Adres operatörü (address-of), tekli</td><td>Operandının adresini döndürür</td></tr>
+    <tr><td class="mono">*p</td><td>Dereferencing / <b>indirection</b> (dolaylı erişim), tekli</td><td>p'nin gösterdiği nesneye erişir. İkili çarpma <code>*</code> ile karıştırma.</td></tr>
+  </table></div>
+  <div class="trap"><b>Tuzak:</b> Birden fazla pointer tanımlarken her isme ayrı <code>*</code> gerekir.
+<pre><code>int *iPtr1, *iPtr2;      // ikisi de int*
+double *iPtr3, iPtr4;    // iPtr3 → double*,  iPtr4 → düz double!</code></pre></div>
+  <p><b>Başlatma ve atama:</b> Pointer tanımlanırken başlatılabilir (<code>int *iPtr = 0; char *s = NULL;</code>). Atama (<code>=</code>) yalnızca <b>aynı temel tipteki</b> pointer'lar arasında tanımlıdır:</p>
+  <pre><code>int x, *xp, *ip;
+xp = &amp;x;     // xp, x'i gösterir
+ip = xp;     // ip de artık x'i gösterir</code></pre>
+  <p><b>Temel tip (base type)</b>, işaret edilen nesnenin nasıl yorumlanacağını belirler (<code>int *p</code> → gösterdiği yer 4 baytlık int olarak okunur) ve pointer aritmetiğini de tanımlar.</p>
+
+  <h3 id="p-aritmetik">Pointer aritmetiği</h3>
+  <p>Sadece dört işlem desteklenir: <code>+</code>, <code>-</code>, <code>++</code>, <code>--</code>. İşlem, temel tipin <b>boyutu kadar</b> yapılır: <code>p++</code>, “bir sonraki nesneyi göster” demektir.</p>
+  <div class="tbl"><table>
+    <tr><th>Tanım</th><th>p = 1000 iken p++ sonrası</th><th>Neden</th></tr>
+    <tr><td class="mono">char *p</td><td class="mono">1001</td><td>sizeof(char) = 1</td></tr>
+    <tr><td class="mono">int *p</td><td class="mono">1004</td><td>sizeof(int) = 4</td></tr>
+    <tr><td class="mono">float *p</td><td class="mono">1004</td><td>sizeof(float) = 4</td></tr>
+    <tr><td class="mono">double *p</td><td class="mono">1008</td><td>sizeof(double) = 8</td></tr>
+  </table></div>
+  <p>Slayttaki çıktı: <code>sizeof(p)</code> = <b>4</b> (32 bit sistem; pointer'a 4 bayt ayrılır). 64 bit sistemde 8 olur, ama sınavda slayttaki değeri (4) esas al.</p>
+  <h4>Pointer karşılaştırma</h4>
+  <ul>
+    <li><code>p == NULL</code> ya da kısaca <code>!p</code>: NULL, false olarak değerlendirilir.</li>
+    <li><code>p == q</code>: <b>aynı nesneyi</b> mi gösteriyorlar?</li>
+    <li><code>*p == *q</code>: gösterdikleri <b>değerler eşit</b> mi? Aynı nesne olmak zorunda değil.</li>
+  </ul>
+
+  <h3 id="p-dizi">Diziler ve pointer'lar</h3>
+  <p>Dizinin adı, <b>ilk elemanın adresidir</b>. Diziler ve pointer'lar çoğu durumda birbirinin yerine kullanılabilir.</p>
+  <pre><code>int num[4] = {1,2,3,4}, *p;
+p = num;          // p = &amp;num[0] ile aynı
+cout &lt;&lt; *p;       // 1
+++p;
+cout &lt;&lt; *p;       // 2
+
+char myString[] = "This is a string";
+char *str = myString;
+for (int i = 0; str[i]; i++)   // '\0' (null) gelince durur
+    cout &lt;&lt; str[i];            // pointer [] ile indekslenebilir</code></pre>
+  <div class="trap"><b>Tuzak:</b> Dizi adı bir pointer gibi davranır ama <b>değeri değiştirilemez</b>; her zaman aynı konumu gösterir (<code>num++</code> hatadır). Pointer değişkenine ise 4 bayt ayrılır ve başka nesneyi gösterecek şekilde yeniden atanabilir.</div>
+  <p><b>Pointer dizisi:</b> <code>int *iPtrs[10];</code> → 10 tane int pointer'ı. <code>iPtrs[0] = &amp;num; cout &lt;&lt; *iPtrs[0];</code></p>
+  <p><b>Fonksiyona pointer geçirme:</b> Pointer değerle (by value) ya da referansla (by reference) geçirilebilir. <b>Her iki durumda da</b> gösterdiği nesne değiştirilebilir. <b>Pointer'ın kendisi</b> ise yalnızca referansla geçirildiğinde değiştirilebilir.</p>
+
+  <h3 id="p-bellek">Bellek bölgeleri</h3>
+  <div class="tbl"><table>
+    <tr><th>Bölge</th><th>İçinde ne var</th><th>Kim yönetir</th></tr>
+    <tr><td><b>Stack</b> (çalışma zamanı yığını)</td><td>Yerel değişkenler, formal parametreler</td><td>Derleyici</td></tr>
+    <tr><td><b>Heap</b></td><td>Dinamik depolama (<code>new</code> ile alınan)</td><td>Bellek ayırıcı (allocator)</td></tr>
+    <tr><td><b>Global data</b></td><td>Statik / global değişkenler</td><td>Derleyici</td></tr>
+    <tr><td>Program code</td><td>Kodun kendisi</td><td>–</td></tr>
+  </table></div>
+  <p>Dinamik bellek <b>çalışma zamanında</b> ayrılır; sınırlı kaynağı verimli kullanır; stack, queue, bağlı liste, ikili ağaç gibi dinamik yapılar için kullanılır ve ihtiyaç bitince program çalışırken serbest bırakılmalıdır.</p>
+
+  <h3 id="p-new">new ve delete</h3>
+  <ul>
+    <li><code>new</code>: C'deki <code>malloc()</code>'un yerini alır. Heap'ten blok ayırır, <b>ilk baytın adresini</b> döndürür. Başarısız olursa <b>exception fırlatır</b> (eski derleyicilerde NULL döner).</li>
+    <li><code>delete</code>: C'deki <code>free()</code>'nin yerini alır. Sadece <code>new</code> ile ayrılmış belleği serbest bırakır.</li>
+  </ul>
+  <pre><code>int *iPtr = new int;          // 4 bayt
+double *dPtr = new double[20]; // 20 × 8 = 160 bayt
+int *a = new int(100);         // 4 bayt, başlangıç değeri 100
+
+delete iPtr;
+iPtr = NULL;                   // iyi uygulama: pointer'ı null yap
+
+double *dptr = new double[SIZE];   // SIZE derleme zamanında bilinmek zorunda değil
+...
+delete [] dptr;                    // dizi için köşeli parantez şart</code></pre>
+  <div class="key"><b>Bellek sızıntısı (memory leak):</b> Fonksiyon bitince yerel değişkenler (<code>numElements</code>, <code>ptrArr</code>) yok olur, dinamik dizinin adresi kaybolur, ama dizi <b>yok edilmez</b>. <code>new</code> o alanı hâlâ kullanılıyor sayar ve tekrar veremez. Sızıntı kalıcı değildir, <b>program durunca biter</b>. Sürekli sızdıran program heap'i tüketebilir.</div>
+  <pre><code>void foo() {
+    int numElements;  cin &gt;&gt; numElements;
+    float *ptrArr = new float[numElements];
+    // ... dizi işlenir
+}   // delete [] ptrArr yok → MEMORY LEAK</code></pre>
+
+  <h3 id="p-hata">new/delete ile yaygın hatalar</h3>
+  <p>Bellek yönetiminde her dinamik parça için bir <b>sahip (owner)</b> belirlenir; ihtiyaç kalmayınca delete etmek sahibin sorumluluğudur.</p>
+  <ol>
+    <li><b>Dangling pointer (sarkan pointer):</b> <code>delete</code> sonrası o belleği gösteren pointer'ı kullanmak.</li>
+    <li><b>Memory leak:</b> artık kullanılmayan belleği geri vermemek.</li>
+    <li><code>new</code> ile ayrılmamış bir belleğe <code>delete</code> uygulamak.</li>
+    <li>Dinamik diziyi silerken <code>[]</code>'yi unutmak (<code>delete p</code> yerine <code>delete [] p</code>).</li>
+  </ol>
+
+  <h3 id="p-kopya">Sığ (shallow) ve derin (deep) kopya</h3>
+  <ul>
+    <li><b>Shallow copy:</b> iki pointer <b>aynı belleği/aynı veriyi</b> gösterir. <code>second = first;</code> sonrası <code>delete [] second;</code> yapılırsa <code>first</code> da artık silinmiş alanı gösterir (dangling).</li>
+    <li><b>Deep copy:</b> her pointer'ın <b>kendi verisi</b> vardır; yeni alan ayrılıp elemanlar tek tek kopyalanır.</li>
+  </ul>
+  <p>Derleyicinin verdiği varsayılan <b>copy constructor</b> üye üye kopyalar, bu da pointer üyelerde sığ kopyaya yol açar. Çözüm kendi copy constructor'ını yazmaktır:</p>
+  <pre><code>className(const className&amp; otherObject);</code></pre>
+
+  <h3 id="p-genis">Dizi genişletme (array expansion), adım adım</h3>
+  <p>Dolu dinamik diziye (<code>ptr</code>, <code>size = 4</code>: 5 7 4 2) yer açmak için:</p>
+  <pre><code>int *temp = new int[size * 2];   // 1) iki kat büyük yeni dizi
+for (int i = 0; i &lt; size; i++)   // 2) elemanları kopyala
+    temp[i] = ptr[i];
+delete [] ptr;                   // 3) eski diziyi sil
+ptr = temp;                      // 4) ptr yeni diziyi göstersin
+size = size * 2;                 // 5) size = 8</code></pre>
+  <div class="trap"><b>Tuzak:</b> Sıra önemli. <code>delete [] ptr</code> kopyalamadan <b>önce</b> yapılırsa veri kaybolur. <code>ptr = temp</code> silmeden önce yapılırsa eski dizinin adresi kaybolur (leak). Sonuçta aynı isim (<code>ptr</code>) daha büyük diziyi gösterir.</div>
+
+  <h3 id="p-adt">Veri yapısı, ADT, algoritma (Ders 1 sonu)</h3>
+  <ul>
+    <li><b>ADT (Soyut Veri Tipi):</b> Bir nesnenin ve üzerindeki işlemler kümesinin <b>matematiksel tanımı</b>. Uygulamayı belirtmez, sadece arayüzdür.</li>
+    <li><b>Algoritma:</b> Bir problemi çözmek için adım adım sürecin yüksek seviyeli, <b>dilden bağımsız</b> açıklaması.</li>
+    <li><b>Veri yapısı:</b> Bir ADT'yi gerçekleştiren <b>algoritmalar kümesi</b>. Bir ADT'nin çok sayıda veri yapısı olabilir. Örneğin Dictionary ADT: liste, ikili arama ağacı, AVL, Splay, Red-Black ağacı, hash tablosu.</li>
+    <li>Neden bu kadar çok veri yapısı var? Gerilimler yüzünden: zaman ↔ alan, performans ↔ zarafet, genellik ↔ sadelik, bir işlemin performansı ↔ diğerininki.</li>
+    <li>Dizi tabanlı yapılarda erişim çok hızlıdır (taban adres + ofset). Ama bitişik bellek zorunluluğu yüzünden <b>ekleme/silme maliyetlidir</b>.</li>
+  </ul>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="ptr">Pointers testini çöz</a>
+    <button class="btn" data-done="ptr">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ LİSTELER ============ -->
+<article class="view" id="v-liste" hidden data-topic="list">
+  <div class="eyebrow" style="margin-top:14px">Ders 1 sonu + Ders 2 · Listeler</div>
+  <h2>List ADT, diziler ve bağlı listeler</h2>
+  <nav class="toc">
+    <a href="#l-adt">List ADT</a><a href="#l-arayuz">Arayüz kodu</a><a href="#l-dizi">Dizi sorunları</a><a href="#l-bagli">Bağlı liste</a><a href="#l-sinif">Sınıfa pointer</a><a href="#l-heap">new ve heap</a><a href="#l-kod">insertFront / deleteFirst / print</a>
+  </nav>
+
+  <h3 id="l-adt">List ADT</h3>
+  <p><b>Soyutlama:</b> temel özelliklere odaklanmak için uygulama ayrıntılarını gizlemek. Arabayı direksiyon ve pedallarla (arayüz) kullanırsın, motorun termodinamiğini (uygulama) bilmen gerekmez.</p>
+  <p><b>ADT</b>, kullanıcının bakış açısından davranışla tanımlanan matematiksel modeldir. Üç unsuru vardır:</p>
+  <ol><li>Saklanan <b>veri</b></li><li>İzin verilen <b>işlemler</b></li><li>İşlemlerin <b>kısıtları</b> (ön koşul / son koşul)</li></ol>
+  <p><b>Liste:</b> elemanlardan oluşan <b>sonlu ve sıralı</b> bir dizi: ⟨a₀, a₁, …, aₙ₋₁⟩. Boş liste ⟨ ⟩ şeklinde gösterilir.</p>
+  <div class="trap"><b>Tuzak:</b> Buradaki “sıralı” (ordered), her elemanın bir <b>konumu</b> olduğu anlamına gelir. Değerlere göre küçükten büyüğe sıralı (sorted) demek <b>değildir</b>.</div>
+  <ul>
+    <li>İlk konum <b>0</b>, son konum <b>n − 1</b>.</li>
+    <li>Hiç eleman yoksa <b>boş (empty)</b>. O anki eleman sayısı <b>uzunluk (length)</b>.</li>
+    <li>Başı <b>head</b>, sonu <b>tail</b>.</li>
+    <li>İşlemler eleman tipinden bağımsız tanımlanır: int listesi, char listesi, maaş kaydı listesi, hatta liste listesi olabilir.</li>
+  </ul>
+  <p>Gerçekleştirimler: <b>1)</b> dizi tabanlı liste (a: statik dizi, b: dinamik dizi), <b>2)</b> bağlı liste. Hepsi aynı List ADT'sini kullanır ama alan/zaman maliyetleri farklıdır.</p>
+
+  <h3 id="l-arayuz">Arayüz (soyut sınıf) kodu</h3>
+  <pre><code>class List {
+public:
+    virtual ~List() {}                        // sanal yıkıcı
+    virtual void   add(int i, double x) = 0;  // 0 &lt;= i &lt;= size
+    virtual double get(int i) const = 0;      // 0 &lt;= i &lt;  size
+    virtual double set(int i, double x) = 0;  // 0 &lt;= i &lt;  size
+    virtual double remove(int i) = 0;         // 0 &lt;= i &lt;  size
+    virtual int    size() const = 0;
+    virtual bool   isEmpty() const = 0;
+};</code></pre>
+  <ul>
+    <li><code>= 0</code> → <b>saf sanal (pure virtual)</b> fonksiyon. List bir <b>soyut temel sınıftır</b>; ne yapılacağını (WHAT) söyler, nasıl yapılacağını (HOW) söylemez. Türetilmiş sınıflar için bir <b>sözleşme</b> görevi görür.</li>
+    <li><b>Sanal yıkıcı</b>, türetilmiş sınıfların doğru temizlenmesi için gereklidir.</li>
+    <li><code>ArrayList</code> / <code>LinkedList</code> List'ten <b>miras alır</b> (kalıtım). Aynı fonksiyon adları <b>polimorfizm</b> sağlar: program List referansıyla her tür listeyi kullanabilir.</li>
+  </ul>
+  <div class="trap"><b>Tuzak:</b> <code>add</code> için <code>i == size</code> geçerlidir (sona ekleme). <code>get/set/remove</code> için <code>i == size</code> geçersizdir.</div>
+  <pre><code>class ArrayBasedList : public List {
+    double* elements; int capacity; int currentSize;
+    void resize(int newCapacity) {
+        double* newArray = new double[newCapacity];
+        for (int i = 0; i &lt; currentSize; i++) newArray[i] = elements[i];
+        delete[] elements;
+        elements = newArray;  capacity = newCapacity;
+    }
+public:
+    ArrayBasedList() { capacity = 10; currentSize = 0; elements = new double[capacity]; }
+    ~ArrayBasedList() { delete[] elements; }   // sızıntıyı önler
+};</code></pre>
+  <p>Diğer ADT işlemleri: konum işlemleri (add, remove, set, get), durum sorguları (size, isEmpty), arama ve toplu işlemler (indexOf, clear).</p>
+
+  <h3 id="l-dizi">C++ dizilerinin ve vektörlerinin sorunları</h3>
+  <h4>Dizi</h4>
+  <ol>
+    <li><b>Sabit boyut:</b> sonradan değişmez. Büyük tahmin bellek israfıdır, küçük tahmin taşma riskidir.</li>
+    <li><b>Sınır denetimi yok:</b> <code>int arr[5]; cout &lt;&lt; arr[10];</code> → <b>tanımsız davranış</b> (çökme ya da bellek bozulması).</li>
+    <li><b>El ile bellek yönetimi:</b> <code>new[]</code> → <code>delete[]</code> unutulursa sızıntı olur.</li>
+    <li><b>Dinamik boyutlandırma desteği yok:</b> yeni dizi al, kopyala, eskiyi sil.</li>
+    <li><b>Yardımcı fonksiyon yok:</b> ekleme/silme/arama el ile yazılır.</li>
+  </ol>
+  <h4>Vektör</h4>
+  <ol>
+    <li>Kapasite aşılınca genelde <b>iki katına çıkar</b> ve tüm elemanlar yeni yere kopyalanır, bu pahalıdır.</li>
+    <li>Ortaya ekleme/silme <b>kaydırma</b> gerektirir; bağlı listeden yavaştır.</li>
+  </ol>
+  <div class="tbl"><table>
+    <tr><th>Özellik</th><th>Dizi</th><th>Vektör</th></tr>
+    <tr><td>Boyut</td><td>Sabit</td><td>Dinamik</td></tr>
+    <tr><td>Bellek</td><td>Ek yük yok</td><td>Fazladan kapasite ayrılır</td></tr>
+    <tr><td>Sınır kontrolü</td><td>Yok</td><td><code>.at()</code> güvenli</td></tr>
+    <tr><td>Performans</td><td>Daha hızlı (resize yok)</td><td>Resize ve kopya gerekebilir</td></tr>
+    <tr><td>Ekle/sil</td><td>Uçlarda hızlı, ortada yavaş</td><td>Ortada yavaş (kaydırma)</td></tr>
+  </table></div>
+  <p><b>Dizi kullan:</b> boyut derleme zamanında biliniyorsa, bellek kısıtı sıkıysa, ek yüksüz hızlı rastgele erişim gerekiyorsa. <b>Vektör kullan:</b> boyut dinamikse, <code>push_back()</code>, <code>erase()</code>, <code>size()</code> gerekiyorsa, otomatik bellek yönetimi isteniyorsa.</p>
+
+  <h3 id="l-bagli">Bağlı liste</h3>
+  <p>Her eleman (<b>düğüm / node</b>) kendi bellek bloğunda durur ve <b>pointer'larla zincirlenir</b>. Elemanların bellekte <b>bitişik olması gerekmez</b>. Mantıksal sıra, fiziksel sıradan bağımsızdır.</p>
+  <div class="mem">
+    <span>head</span><span class="arrow">─►</span><div class="cell"><small>0xF6510</small>alice │ •</div><span class="arrow">─►</span><div class="cell"><small>0xF7100</small>bob │ •</div><span class="arrow">─►</span><div class="cell">charlie │ ∅</div>
+  </div>
+  <p>Benzetme: el ele tutuşan insanlar. Ekleme: önceki kişi yeni kişinin elini, yeni kişi de sonrakinin elini tutar, <b>kaydırma yok</b>. Çıkarma: önceki kişi doğrudan sonrakinin elini tutar.</p>
+  <ul>
+    <li><b>Düğüm:</b> veri + bir veya daha fazla pointer. Bağlı liste, ağaç ve grafların yapı taşıdır.</li>
+    <li><b>Doğrusal:</b> her düğümün tam bir öncülü ve bir ardılı vardır (ilkinin öncülü, sonuncunun ardılı olmayabilir).</li>
+    <li><b>Öz-referanslı (self-referential):</b> düğüm aynı türden başka bir düğüme (hatta kendisine) referans verir. <code>next</code>'in türü <code>Node*</code>'dır.</li>
+    <li><b>head</b>: her zaman ilk düğümü gösterir; doğrudan indeksleme olmadığı için tek giriş noktasıdır. <code>head == nullptr</code> ise <b>liste boştur</b>. Son düğümün <code>next</code>'i <b>nullptr</b>'dır.</li>
+    <li><b>Tek yönlü (singly)</b>: sadece <code>next</code>. <b>Çift yönlü (doubly)</b>: <code>next</code> ve <code>prev</code>.</li>
+    <li>Avantajları: dinamiktir (büyür/küçülür), bitişik değildir, ortaya ekleme pointer güncelleyerek yapılır, resize maliyeti yoktur.</li>
+  </ul>
+  <pre><code>class Node {
+public:
+    string name;   // veri
+    Node* next;    // sonraki düğüm
+    Node(string nodeName) { name = nodeName; next = nullptr; }
+};
+Node* front  = new Node("alice");
+Node* second = new Node("bob");
+front-&gt;next = second;      // alice → bob → nullptr</code></pre>
+  <div class="key">Slaytın tavsiyesi: <b>Bağlı liste kodu yazarken mutlaka şekil çiz.</b> Çizmezsen pointer sırasını karıştırmak çok kolaydır.</div>
+
+  <h3 id="l-sinif">Sınıfa pointer, <code>-&gt;</code> operatörü</h3>
+  <pre><code>Student s1;  Student* ptr = &amp;s1;
+ptr-&gt;name = "Bob";  ptr-&gt;introduce();    // (*ptr).name ile aynı
+
+Student* p = new Student;  ...  delete p;          // tek nesne
+Student* students = new Student[3]; ... delete[] students;   // nesne dizisi</code></pre>
+
+  <h3 id="l-heap">new boş alanı nasıl bulur?</h3>
+  <ol>
+    <li>Heap yöneticisi boş blokları bir <b>serbest liste (free list, bağlı liste)</b> olarak tutar ve yeterince büyük bir blok arar.</li>
+    <li>Belleği o blokta ayırır.</li>
+    <li>Pointer'ı döndürür.</li>
+  </ol>
+  <p><b>Ardışık iki <code>new</code> neden bitişik değildir?</b> Üç nedeni var: <b>heap parçalanması</b>, <b>bellek hizalama ve dolgu</b> (bloklar 8/16/32 bayta yuvarlanır) ve <b>işletim sisteminin</b> ayırmaları ayrı bellek sayfalarına koyabilmesi.</p>
+
+  <h3 id="l-kod">LinkedList kodları (ezberle)</h3>
+  <p>Kurucu: <code>head = nullptr; count = 0;</code>. Kullanıcı sadece public metotları görür; iç yapı gizlidir. Buna <b>bilgi gizleme (information hiding)</b> denir.</p>
+  <h4>insertFront: başa ekle</h4>
+  <pre><code>void insertFront(string val) {
+    Node* p = new Node(val);   // 1) yeni düğüm
+    p-&gt;next = head;            // 2) yeni düğüm eski ilk düğümü göstersin
+    head = p;                  // 3) head yeni düğümü göstersin
+    count++;
+}</code></pre>
+  <div class="trap"><b>Tuzak:</b> 2 ve 3. satırlar yer değiştirirse (<code>head = p; p-&gt;next = head;</code>), düğüm kendini gösterir ve listenin geri kalanı kaybolur. Liste boşsa <code>p-&gt;next</code> nullptr olur, bu doğrudur.</div>
+  <p>Örnek: boş listeye insertFront("a"), ("b"), ("c") → print çıktısı <b>c b a</b> (başa ekleme sırayı ters çevirir).</p>
+  <h4>deleteFirst: ilk düğümü sil</h4>
+  <pre><code>void deleteFirst() {
+    if (head != nullptr) {     // boşsa hiçbir şey yapma
+        Node* t = head;        // 1) eski head'i hatırla
+        head = head-&gt;next;     // 2) head'i bir ileri taşı
+        delete t;              // 3) eski düğümü serbest bırak
+        count--;
+    }
+}</code></pre>
+  <p><code>t</code> olmadan eski düğümün adresi kaybolur ve silinemez (leak). <code>delete t</code> sonrası t geçersiz adresi gösterir ama yerel değişken olduğu için sorun değildir.</p>
+  <h4>print: dolaşma (traversal)</h4>
+  <pre><code>void print() const {
+    Node* walk = head;
+    while (walk != nullptr) {
+        cout &lt;&lt; walk-&gt;name &lt;&lt; " ";
+        walk = walk-&gt;next;
+    }
+}</code></pre>
+  <div class="trap"><b>Tuzak:</b> Koşul <code>walk-&gt;next != nullptr</code> olursa <b>son eleman yazılmaz</b>, boş listede de nullptr erişimi olur. Dolaşmak için head'i değil <b>geçici pointer'ı</b> ilerlet; head'i kaybedersen listeyi kaybedersin.</div>
+  <p>Diğer metotlar: <code>append</code> (sona ekle), <code>search</code> (değer ara), <code>deleteNode(val)</code> (ilk eşleşeni sil), <code>size()</code>.</p>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="list">Listeler testini çöz</a>
+    <button class="btn" data-done="list">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ YIĞINLAR ============ -->
+<article class="view" id="v-yigin" hidden data-topic="stack">
+  <div class="eyebrow" style="margin-top:14px">Ders 4 + Ders 5 başı · Stack</div>
+  <h2>Yığınlar: LIFO, postfix, parantez, N-Vezir</h2>
+  <nav class="toc">
+    <a href="#s-tanim">Tanım</a><a href="#s-uyg">Uygulamalar</a><a href="#s-gost">Infix/Postfix</a><a href="#s-donus">Dönüştürme</a><a href="#s-deger">Postfix hesapla</a><a href="#s-paren">Parantez</a><a href="#s-vezir">N-Vezir</a><a href="#s-dizi">Dizi ile</a>
+  </nav>
+
+  <h3 id="s-tanim">Yığın nedir?</h3>
+  <p>Ekleme ve çıkarmanın <b>her zaman aynı uçtan (top / üst)</b> yapıldığı sıralı koleksiyon. Karşı uç <b>taban (base)</b>; tabana yakın elemanlar en uzun süredir yığında olanlardır. Kural <b>LIFO</b>: Last-In First-Out (son giren ilk çıkar). Diğer adı <b>push-down list / push-down stack</b>. Örnek: yemekhanedeki üst üste tepsiler.</p>
+  <div class="tbl"><table>
+    <tr><th>İşlem</th><th>Ne yapar</th></tr>
+    <tr><td class="mono">push</td><td>Üste yeni eleman ekler</td></tr>
+    <tr><td class="mono">pop</td><td>Üstteki elemanı çıkarır</td></tr>
+    <tr><td class="mono">isEmpty</td><td>Boş mu?</td></tr>
+    <tr><td class="mono">isFull</td><td>Dolu mu?</td></tr>
+    <tr><td class="mono">returnTop</td><td>Üstteki elemanı söyler (çıkarmaz)</td></tr>
+  </table></div>
+  <p>Slayt örneği: push 8, 860, −60, 10 → üstte <b>10</b>. Silme sırası: 10, −60, 860, 8.</p>
+  <div class="trap"><b>Tuzak:</b> Boş yığına <b>pop uygulanmaz</b>. Önce <code>isEmpty()</code> ile kontrol et (underflow). Yığın kavramı tektir ama uygulama biçimleri farklı olabilir (dizi, bağlı liste).</div>
+
+  <h3 id="s-uyg">Yığın uygulamalarının 4 kategorisi</h3>
+  <ol>
+    <li><b>Tersine çevirme</b> (reversing): verinin sırasını ters çevirmek.</li>
+    <li><b>Ayrıştırma</b> (parsing): parantezlerin doğru eşleşip eşleşmediği.</li>
+    <li><b>Kullanımı erteleme</b> (postponing): infix → postfix dönüşümü ve postfix değerlendirme.</li>
+    <li><b>Geri izleme</b> (backtracking): labirent, N-Vezir. Yollar arasında seçim yapıp gerekince geri dönmek.</li>
+  </ol>
+
+  <h3 id="s-gost">Üç gösterim</h3>
+  <div class="tbl"><table>
+    <tr><th>Gösterim</th><th>İşleç nerede</th><th>Örnek</th></tr>
+    <tr><td>Infix (ara)</td><td>İşlenenlerin arasında</td><td class="mono">A + B</td></tr>
+    <tr><td>Postfix (son)</td><td>İşlenenlerden sonra</td><td class="mono">A B +</td></tr>
+    <tr><td>Prefix (ön)</td><td>İşlenenlerden önce</td><td class="mono">+ A B</td></tr>
+  </table></div>
+  <p>Infix'in dezavantajı: işlem sırasını belirlemek için <b>parantez gerekir</b>. Postfix'te <b>parantez gerekmez</b>.</p>
+  <p>Öncelik: <code>* /</code> &gt; <code>+ -</code>. Aynı öncelikte <b>soldan sağa</b> (left associative): <code>a+b+c = (a+b)+c = ab+c+</code>.</p>
+  <div class="tbl"><table>
+    <tr><th>Infix</th><th>Postfix (slayttaki cevaplar)</th></tr>
+    <tr><td class="mono">a + b * c</td><td class="mono">a b c * +</td></tr>
+    <tr><td class="mono">(A + B) * C</td><td class="mono">A B + C *</td></tr>
+    <tr><td class="mono">a + (b * c / d)</td><td class="mono">a b c * d / +</td></tr>
+    <tr><td class="mono">(a + b) * (c - d)</td><td class="mono">a b + c d - *</td></tr>
+    <tr><td class="mono">a - b / (c + d * e)</td><td class="mono">a b c d e * + / -</td></tr>
+    <tr><td class="mono">((a+b)*c - (d-e)) / (f+g)</td><td class="mono">a b + c * d e - - f g + /</td></tr>
+    <tr><td class="mono">5 * 3 + 2 + 6 * 4</td><td class="mono">5 3 * 2 + 6 4 * +</td></tr>
+  </table></div>
+
+  <h3 id="s-donus">Infix → postfix algoritması (yığınla)</h3>
+  <ol>
+    <li>İşlenen (harf/sayı) → doğrudan <b>çıktıya</b>.</li>
+    <li>İşleç geldiğinde: yığın boşsa push et. Değilse, gelen işlecin önceliği yığının tepesindekinden <b>küçük veya eşit olduğu sürece</b> tepedekini pop edip çıktıya yaz. Tepe <code>(</code> olunca dur. Sonra gelen işleci push et.</li>
+    <li><code>(</code> → push. Okunurken en yüksek öncelikli, <b>yığının içindeyken en düşük</b> önceliklidir; her işleç onun üstüne konur.</li>
+    <li><code>)</code> → <code>(</code>'ya kadar her şeyi pop edip çıktıya yaz; <code>(</code>'yı at. <b>Parantezler çıktıya yazılmaz.</b></li>
+    <li>İfade bitince yığında kalanları sırayla pop edip çıktıya yaz.</li>
+  </ol>
+  <p>Öncelik listesi (slayt): 1) ifadedeki <code>(</code> 2) <code>* /</code> 3) <code>+ -</code> 4) yığındaki <code>(</code>.</p>
+  <div class="tbl"><table>
+    <tr><th>Okunan</th><th>Yığın (alt→üst)</th><th>Çıktı</th></tr>
+    <tr><td class="mono">a</td><td class="mono"></td><td class="mono">a</td></tr>
+    <tr><td class="mono">-</td><td class="mono">-</td><td class="mono">a</td></tr>
+    <tr><td class="mono">b</td><td class="mono">-</td><td class="mono">a b</td></tr>
+    <tr><td class="mono">/</td><td class="mono">- /</td><td class="mono">a b</td></tr>
+    <tr><td class="mono">(</td><td class="mono">- / (</td><td class="mono">a b</td></tr>
+    <tr><td class="mono">c</td><td class="mono">- / (</td><td class="mono">a b c</td></tr>
+    <tr><td class="mono">+</td><td class="mono">- / ( +</td><td class="mono">a b c</td></tr>
+    <tr><td class="mono">d</td><td class="mono">- / ( +</td><td class="mono">a b c d</td></tr>
+    <tr><td class="mono">*</td><td class="mono">- / ( + *</td><td class="mono">a b c d</td></tr>
+    <tr><td class="mono">e</td><td class="mono">- / ( + *</td><td class="mono">a b c d e</td></tr>
+    <tr><td class="mono">)</td><td class="mono">- /</td><td class="mono">a b c d e * +</td></tr>
+    <tr><td class="mono">son</td><td class="mono"></td><td class="mono">a b c d e * + / -</td></tr>
+  </table></div>
+  <p>Kendi ifadeni denemek için <a href="#araclar">Araçlar</a> sekmesine geç.</p>
+
+  <h3 id="s-deger">Postfix ifadeyi hesaplama</h3>
+  <ul>
+    <li>İşlenen → <b>push</b>.</li>
+    <li>İşleç → yığından <b>iki eleman pop</b> et, işlemi uygula, <b>sonucu push</b> et.</li>
+    <li>Sonunda yığında tek değer kalır; o sonuçtur.</li>
+  </ul>
+  <div class="trap"><b>Tuzak:</b> <code>-</code> ve <code>/</code>'de sıra önemlidir: önce çıkan <b>sağ</b> işlenendir. <code>8 3 -</code> için pop 3 (sağ), pop 8 (sol) → 8 − 3 = <b>5</b>.</div>
+  <p>Slayt örneği: <code>6 5 2 3 + 8 * + 3 + *</code></p>
+  <div class="tbl"><table>
+    <tr><th>Okunan</th><th>İşlem</th><th>Yığın (alt→üst)</th></tr>
+    <tr><td class="mono">6 5 2 3</td><td>push ×4</td><td class="mono">6 5 2 3</td></tr>
+    <tr><td class="mono">+</td><td>2 + 3 = 5</td><td class="mono">6 5 5</td></tr>
+    <tr><td class="mono">8</td><td>push</td><td class="mono">6 5 5 8</td></tr>
+    <tr><td class="mono">*</td><td>5 × 8 = 40</td><td class="mono">6 5 40</td></tr>
+    <tr><td class="mono">+</td><td>5 + 40 = 45</td><td class="mono">6 45</td></tr>
+    <tr><td class="mono">3</td><td>push</td><td class="mono">6 45 3</td></tr>
+    <tr><td class="mono">+</td><td>45 + 3 = 48</td><td class="mono">6 48</td></tr>
+    <tr><td class="mono">*</td><td>6 × 48 = <b>288</b></td><td class="mono">288</td></tr>
+  </table></div>
+
+  <h3 id="s-paren">Dengeli parantez / semboller</h3>
+  <p>Dengeli: her açılışın bir kapanışı var ve çiftler doğru iç içe. En son açılan, ilk gelen kapanışla eşleşmelidir (içten dışa). Bu yüzden yığın kullanılır.</p>
+  <ol>
+    <li>Boş yığınla başla, soldan sağa oku.</li>
+    <li>Açılış <code>( [ {</code> → <b>push</b>.</li>
+    <li>Kapanış <code>) ] }</code> → yığın <b>boşsa hata</b>. Değilse pop et; çıkan sembol <b>aynı türün açılışı değilse hata</b>.</li>
+    <li>Sonda yığın <b>boş değilse hata</b>.</li>
+  </ol>
+  <p>Geçerli: <code>{ [ ] }</code>, <code>{ { ( [ ] [ ] ) } ( ) }</code>, <code>[ ] [ ] [ ] ( ) { }</code>. Geçersiz: <code>{ [ } ]</code>.</p>
+  <p>Slayt örneği <code>(()}</code>: <code>(</code> push, <code>(</code> push, <code>)</code> → pop <code>(</code>, eşleşir. <code>}</code> → pop <code>(</code>, <code>{</code> değil → <b>hata</b>.</p>
+  <div class="tbl"><table>
+    <tr><th>Girdi</th><th>Hata türü</th></tr>
+    <tr><td class="mono">(()</td><td>Sonda yığın boş değil</td></tr>
+    <tr><td class="mono">())</td><td>Kapanış geldiğinde yığın boş</td></tr>
+    <tr><td class="mono">{[}]</td><td>Tür uyuşmazlığı</td></tr>
+  </table></div>
+
+  <h3 id="s-vezir">N-Vezir problemi (geri izleme)</h3>
+  <p>N×N tahtaya N vezir: aynı <b>satır</b>, <b>sütun</b> ya da <b>köşegende</b> iki vezir olamaz.</p>
+  <ul>
+    <li><b>Yığın</b>, yerleştirilen her vezirin (satır, sütun) kaydını tutar. <b>filled (dolu)</b> tamsayısı kaç satırın dolu olduğunu tutar.</li>
+    <li>Çakışma yoksa → filled++. filled == N ise <b>çözüm bulundu</b>. Değilse sonraki satıra geç ve <b>1. sütundan</b> başla (push).</li>
+    <li>Çakışma var ve sağa kayacak yer varsa → veziri sağa kaydır, yığının tepesindeki kaydı güncelle.</li>
+    <li>Çakışma var ve yer yoksa → <b>geri izle</b>: pop, filled−−. Sağa kaydırılabilecek bir satır bulana kadar tekrarla.</li>
+  </ul>
+  <div class="key">İleri giderken her zaman <b>ilk sütundan</b> başlanır. Geri izlerken <b>kalınan yerden devam edilir</b>; 1. sütuna dönülmez. Pop sırasında yığın tamamen boşalırsa ilk vezirin de yeri bitmiştir, yani <b>çözüm yoktur</b>.</div>
+  <p>4-Vezir izi (slayt): (1,1),(2,3) → 3. satır yok → geri izle (2,4) → (3,2) → 4. satır yok → (3,3),(3,4) yok → (2,?) yok → (1,2),(2,4),(3,1),(4,3) → <b>çözüm</b>.</p>
+
+  <h3 id="s-dizi">Dizi ile yığın</h3>
+  <p>En basit gerçekleştirme <b>dizi</b> kullanmaktır. Dezavantajı: <b>boyut önceden belirlenmelidir</b>. Dizi yığının kendisi değil, saklandığı alandır. Mevcut konumu (top) tutmak için ek bir değişken gerekir.</p>
+  <pre><code>int stack[MAX]; int top = -1;
+void push(int x){ if (top == MAX-1) /* overflow */; else stack[++top] = x; }
+int  pop()      { if (top == -1)    /* underflow */; else return stack[top--]; }</code></pre>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="stack">Yığınlar testini çöz</a>
+    <a class="btn" href="#araclar">Adım adım araçlar</a>
+    <button class="btn" data-done="stack">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ KUYRUKLAR ============ -->
+<article class="view" id="v-kuyruk" hidden data-topic="queue">
+  <div class="eyebrow" style="margin-top:14px">Ders 5 · Queue</div>
+  <h2>Kuyruklar: FIFO, doğrusal ve dairesel dizi</h2>
+  <nav class="toc">
+    <a href="#q-tanim">Tanım</a><a href="#q-iz">İzleme örneği</a><a href="#q-lin">Doğrusal dizi</a><a href="#q-sorun">Sorun</a><a href="#q-dai">Dairesel</a><a href="#q-6">6 yöntem</a>
+  </nav>
+
+  <h3 id="q-tanim">Kuyruk nedir?</h3>
+  <p>Elemanların <b>arkadan (rear)</b> eklendiği, <b>önden (front)</b> çıkarıldığı liste. Kural <b>FIFO</b>: First-In First-Out (ilk giren ilk çıkar), “ilk gelen ilk hizmet alır”. Süpermarket, banka sırası. Adil işlem sırası sağlar.</p>
+  <p><b>Bilgisayardaki uygulamaları:</b> tek işlemcide işlerin (jobs) sıraya alınması, <b>yazdırma kuyruğu (print spooling)</b>, ağda bilgi paketlerinin sıralanması.</p>
+  <div class="tbl"><table>
+    <tr><th>İşlem</th><th>Ne yapar</th></tr>
+    <tr><td class="mono">enqueue(q, x)</td><td>x'i kuyruğun sonuna (rear) ekler</td></tr>
+    <tr><td class="mono">x = dequeue(q)</td><td>Öndeki elemanı çıkarır ve döndürür</td></tr>
+    <tr><td class="mono">isEmpty(q)</td><td>Boş mu?</td></tr>
+    <tr><td class="mono">isFull(q)</td><td>Yeni eleman için yer var mı?</td></tr>
+  </table></div>
+  <div class="key"><b>Yığın ile fark:</b> Yığında ekleme ve silme <b>aynı uçtan</b> (top) yapılır. Kuyrukta <b>iki farklı uçtan</b> yapılır (rear'a ekle, front'tan çıkar).</div>
+
+  <h3 id="q-iz">Slayttaki izleme örneği</h3>
+  <pre><code>enqueue(q, 9); enqueue(q, 10); enqueue(q, 50);
+x = dequeue(q); Print(x);        // 9
+enqueue(q, 20); enqueue(q, -40);
+x = dequeue(q); Print(x);        // 10
+enqueue(q, 40);
+x = dequeue(q); Print(x);        // 50
+enqueue(q, 30);</code></pre>
+  <p><b>Çıktı:</b> 9, 10, 50 · <b>Son kuyruk (front → rear):</b> 20, −40, 40, 30</p>
+
+  <h3 id="q-lin">Doğrusal dizi ile kuyruk</h3>
+  <pre><code>#define MAXQUEUE 20
+struct QueueRec { int count; int front; int rear; float entry[MAXQUEUE]; };
+typedef struct QueueRec Queue;
+
+void initializeQueue(Queue* q) { q-&gt;front = 0;  q-&gt;rear = -1; }
+
+BOOL queueEmpty(const Queue* q) { return q-&gt;rear &lt; q-&gt;front; }
+
+void enqueue(Queue* q, float item) {
+    if (queueFull(q)) { fprintf(stderr,"Queue is full\n"); exit(1); }
+    q-&gt;rear++;                    // ÖNCE rear artar
+    q-&gt;entry[q-&gt;rear] = item;     // SONRA yazılır
+}
+float dequeue(Queue* q) {
+    if (queueEmpty(q)) { fprintf(stderr,"Queue is empty\n"); exit(1); }
+    float item = q-&gt;entry[q-&gt;front];   // ÖNCE okunur
+    q-&gt;front++;                         // SONRA front artar
+    return item;
+}</code></pre>
+  <div class="key">
+    Başlangıç: <code>rear = -1</code>, <code>front = 0</code><br>
+    Boş: <code>rear &lt; front</code><br>
+    Eleman sayısı: <code>rear − front + 1</code><br>
+    Her enqueue'da <b>rear</b>, her dequeue'da <b>front</b> bir artar.<br>
+    Ekleme sırasında <b>taşma (overflow)</b> kontrol edilir; dizi doluyken ekleme yapılırsa taşma olur.
+  </div>
+  <div class="trap"><b>Tuzak:</b> <code>entry[MAXQUEUE]</code> dizisinde son geçerli indeks <code>MAXQUEUE − 1</code>'dir. rear −1'den başladığı için kuyruk <code>rear == MAXQUEUE − 1</code> olduğunda dolar. (Slayttaki <code>rear==MAXSIZE</code> kontrolüne dikkat: indeks açısından doğru sınır <code>MAX−1</code>.)</div>
+
+  <h3 id="q-sorun">Doğrusal kuyruğun sorunu</h3>
+  <p>rear sürekli artar. Çıkarılan elemanların yerleri <b>tekrar kullanılmaz</b>. Sonuçta kuyrukta çok az eleman olsa bile (hatta kuyruk boşken bile) rear dizinin sonuna geldiği için <b>yeni eleman eklenemez</b>. Dizinin çok büyük olması gerekir.</p>
+  <p><b>Çözüm:</b> diziyi düz çizgi değil <b>dairesel (circular)</b> düşün: indeks 0, son indeksin hemen ardından gelir.</p>
+
+  <h3 id="q-dai">Dairesel (circular) kuyruk</h3>
+  <p>İndeksi bir artırmanın 3 eşdeğer yolu:</p>
+  <pre><code>i = ((i + 1) == max) ? 0 : (i + 1);        // 1) ternary
+if ((i + 1) == max) i = 0; else i = i + 1;  // 2) if-else
+i = (i + 1) % max;                          // 3) modulo  ← en çok bu sorulur</code></pre>
+  <p>Örnek: boyut 5, <code>front = 2</code>, <code>rear = 4</code> (C, D, E dolu). F eklenirse <code>rear = (4+1) % 5 = 0</code>, F 0. indekse yerleşir.</p>
+  <div class="trap"><b>Tuzak:</b> Dairesel dizide <code>rear &lt; front</code> artık boşluk testi <b>olamaz</b> (yukarıdaki örnekte rear=0 &lt; front=2 ama kuyruk dolu).</div>
+  <p><b>Bir yer boş bırakma yöntemi (slayt):</b> <code>front</code>, ilk elemanı değil <b>ilk elemandan bir önceki</b> konumu gösterir; <code>rear</code> son elemanı gösterir.</p>
+  <div class="key">
+    Boş: <code>front == rear</code><br>
+    Dolu: <code>front == (rear + 1) % size</code><br>
+    <b>Dezavantajı:</b> dolu ve boşu ayırt etmek için dizide <b>bir göz hep boş kalır</b>, yani size kadar değil size−1 eleman tutulur.
+  </div>
+  <p>Kendi dairesel kuyruğunu adım adım oynatmak için <a href="#araclar">Araçlar</a> sekmesine geç.</p>
+
+  <h3 id="q-6">Kuyruk gerçekleştirme yöntemleri (6)</h3>
+  <ol>
+    <li><b>Fiziksel model:</b> front hep dizinin ilk konumunda. Silmede tüm elemanlar bir kaydırılır (yavaş).</li>
+    <li><b>İki indeksli doğrusal dizi:</b> front ve rear sürekli artar (yer israfı).</li>
+    <li><b>Bir konumu boş bırakılan dairesel dizi:</b> dolu ve boşu ayırmak için bir göz boş kalır.</li>
+    <li><b>Boolean flag'li dairesel dizi:</b> front/rear + dolu/boş bayrağı.</li>
+    <li><b>Sayaçlı dairesel dizi:</b> front/rear + eleman sayısı (count). count==0 boş, count==size dolu.</li>
+    <li><b>Özel değerli dairesel dizi:</b> boşluğu belirtmek için front/rear'a özel değer (ör. −1) atanır.</li>
+  </ol>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="queue">Kuyruklar testini çöz</a>
+    <a class="btn" href="#araclar">Dairesel kuyruk simülatörü</a>
+    <button class="btn" data-done="queue">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ ÖZYİNELEME ============ -->
+<article class="view" id="v-ozyineleme" hidden data-topic="rec">
+  <div class="eyebrow" style="margin-top:14px">Ders 6 · Recursion</div>
+  <h2>Özyineleme: temel durum, kutu izi, ikili arama</h2>
+  <nav class="toc">
+    <a href="#r-temel">Temel fikir</a><a href="#r-4">4 soru</a><a href="#r-fact">Faktöriyel</a><a href="#r-kutu">Kutu izi</a><a href="#r-power">power</a><a href="#r-vert">writeVertical</a><a href="#r-back">writeBackward</a><a href="#r-bs">İkili arama</a><a href="#r-max">maxArray</a><a href="#r-ver">Verimlilik</a>
+  </nav>
+
+  <h3 id="r-temel">Temel fikir</h3>
+  <p>Problemi <b>aynı türden daha küçük</b> problemlere bölüp onları çözerek asıl problemi çözmek. Özyinelemeli fonksiyon <b>kendisini çağırır</b>.</p>
+  <ul>
+    <li><b>Temel durum (base case):</b> fonksiyonun kendini çağırmayı bırakıp <b>doğrudan sonuç döndürdüğü</b> koşul. Yoksa sonsuz özyineleme ve <b>stack overflow</b> olur.</li>
+    <li><b>Özyinelemeli adım:</b> problem küçültülüp fonksiyon tekrar çağrılır. Her çağrı temel duruma <b>bir adım yaklaşmalıdır</b>.</li>
+    <li>Çoğu özyinelemeli çözüm <b>böl ve yönet (divide and conquer)</b> stratejisini kullanır (ör. ikili arama: sözlüğü ikiye böl, uygun yarıda ara).</li>
+    <li>Özyineleme güçlüdür ama <b>verimliliği garanti etmez</b>.</li>
+  </ul>
+
+  <h3 id="r-4">Özyinelemeli çözüm için 4 soru</h3>
+  <ol>
+    <li>Problemi aynı türden daha küçük problemler cinsinden nasıl tanımlarım?</li>
+    <li>Her çağrı problemin boyutunu nasıl küçültür?</li>
+    <li>Hangi örnek temel durum olarak kullanılabilir?</li>
+    <li>Boyut küçüldükçe temel duruma ulaşılacak mı?</li>
+  </ol>
+  <p>Dördüne de olumlu cevap varsa uygun bir <b>tümevarım</b> vardır. “Özyinelemeli düşünme” yerine “tümevarımsal düşünme” demek daha uygun olabilir.</p>
+
+  <h3 id="r-fact">Faktöriyel</h3>
+  <pre><code>int fact(int n) {          // ön koşul: n &gt;= 0
+    if (n == 0) return 1;  // temel durum
+    else return n * fact(n-1);   // (A)
+}</code></pre>
+  <pre><code>fact(3) = 3 * fact(2)
+              = 2 * fact(1)
+                    = 1 * fact(0)
+                          = 1          ← temel durum
+        → 1 → 1*1=1 → 2*1=2 → 3*2 = 6</code></pre>
+  <p>fact(3) toplam <b>4 çağrı</b> yapar: fact(3), fact(2), fact(1), fact(0). Her çağrı boyutu 1 azaltır; n negatif olmadığı için temel duruma her zaman ulaşılır.</p>
+  <div class="trap"><b>Tuzak:</b> <code>fact(-1)</code> ön koşulu bozar: n hiçbir zaman 0 olmaz, sonsuz özyineleme ve stack overflow olur. Negatif sayının faktöriyeli tanımsızdır.</div>
+  <p><b>Değişmez (invariant):</b> algoritmanın belirli bir noktasında <b>her zaman doğru</b> olan koşul. fact'te: <code>// n &gt; 0, so n-1 &gt;= 0. Thus fact(n-1) returns (n-1)!</code></p>
+
+  <h3 id="r-kutu">Kutu izi (box trace)</h3>
+  <p>Derleyicinin özyinelemeyi nasıl gerçekleştirdiğinin gösterimi. Her kutu kabaca bir <b>etkinleştirme kaydına (activation record)</b> karşılık gelir.</p>
+  <ol>
+    <li>Gövdedeki her özyinelemeli çağrıyı etiketle (A, B…): dönüş noktası belli olsun.</li>
+    <li>Her çağrı için yeni kutu çiz: argümanların kopyası, çağrının döndüreceği değer için yer tutucu, fonksiyonun değeri ve yerel değişkenler.</li>
+    <li>Çağıran kutudan yeni kutuya etiketli ok çiz.</li>
+    <li>Fonksiyondan çıkarken kutunun üstünü çiz, ok boyunca geri dön, dönen değeri yerine yaz.</li>
+  </ol>
+
+  <h3 id="r-power">power(x, n)</h3>
+  <pre><code>int power(int x, int n) {
+    if (n &lt; 0) { cout &lt;&lt; "Illegal argument"; exit(1); }
+    if (n &gt; 0) return power(x, n-1) * x;
+    else       return 1;         // n == 0 temel durum
+}
+// power(2,3) → power(2,2)*2 → power(2,1)*2 → power(2,0)*2 → 1
+//            → 1*2=2 → 2*2=4 → 4*2 = 8    (4 çağrı)</code></pre>
+
+  <h3 id="r-vert">writeVertical: rakamları alt alta yaz</h3>
+  <pre><code>void writeVertical(int n) {
+    if (n &lt; 10) cout &lt;&lt; n &lt;&lt; endl;       // temel durum
+    else {
+        writeVertical(n / 10);           // önce son rakam hariç hepsi
+        cout &lt;&lt; (n % 10) &lt;&lt; endl;        // sonra son rakam
+    }
+}
+// writeVertical(123): 1, 2, 3 (alt alta)</code></pre>
+  <div class="trap"><b>Tuzak:</b> <code>cout</code> özyinelemeli çağrıdan <b>önce</b> yazılırsa rakamlar <b>ters</b> çıkar (123 → 3, 2, 1). Çıktı sorularında çağrı ile yazdırmanın sırasına bak.</div>
+
+  <h3 id="r-back">writeBackward: diziyi tersten yaz</h3>
+  <pre><code>void writeBackward(string s) {
+    int length = s.size();
+    if (length &gt; 0) {
+        cout &lt;&lt; s.substr(length - 1, 1);       // son karakteri yaz
+        writeBackward(s.substr(0, length - 1)); // geri kalanı tersten yaz
+    }   // length == 0: temel durum, hiçbir şey yapma
+}
+// "cat" → "tac"</code></pre>
+  <p>Dört soru: n uzunluğu n−1'e indirgenir. Temel durum <b>boş dizi</b> (hiçbir şey yapma). Her çağrıda uzunluk 1 azalır, temel duruma ulaşılır.</p>
+
+  <h3 id="r-bs">İkili arama (binary search)</h3>
+  <ul>
+    <li>Sıralı (doğrusal) arama: kolay ama verimsiz. Her başarısız testte <b>1 eleman</b> elenir.</li>
+    <li>İkili arama: daha verimli ama <b>dizi önce sıralanmış olmalı</b>. Her başarısız testte kalan listenin <b>yarısı</b> elenir; adı buradan gelir.</li>
+  </ul>
+  <pre><code>int binarySearch(const int a[], int first, int last, int target) {
+    int index;
+    if (first &gt; last) index = -1;                 // temel durum: yok
+    else {
+        int mid = first + (last - first) / 2;
+        if (target == a[mid]) index = mid;        // temel durum: bulundu
+        else if (target &lt; a[mid])
+             index = binarySearch(a, first, mid-1, target);   // X
+        else index = binarySearch(a, mid+1, last, target);    // Y
+    }
+    return index;
+}</code></pre>
+  <p>Slayt örneği: <code>a = 5 7 9 13 32 33 42 54 56 88</code> (indeks 0–9), hedef <b>33</b></p>
+  <div class="tbl"><table>
+    <tr><th>first</th><th>last</th><th>mid</th><th>a[mid]</th><th>Karar</th></tr>
+    <tr><td>0</td><td>9</td><td>4</td><td>32</td><td>33 &gt; 32 → sağ yarı</td></tr>
+    <tr><td>5</td><td>9</td><td>7</td><td>54</td><td>33 &lt; 54 → sol yarı</td></tr>
+    <tr><td>5</td><td>6</td><td>5</td><td>33</td><td><b>Bulundu: indeks 5</b></td></tr>
+  </table></div>
+  <p>Temel durumlar: <code>target == a[mid]</code> (bulundu) ve <code>first &gt; last</code> (yok, −1). <code>mid = first + (last−first)/2</code>, <code>(first+last)/2</code> ile aynı sonucu verir ama büyük sayılarda taşmayı önler.</p>
+  <p><b>binarySearch2</b> (alternatif): temel durum <code>first == last</code>. Sağ yarı için <code>mid</code> dahil edilir: <code>binarySearch2(a, mid, last, target)</code>.</p>
+
+  <h3 id="r-max">maxArray: en büyük eleman (böl ve yönet)</h3>
+  <pre><code>maxArray(&lt;1,6,8,3&gt;) = max( maxArray(&lt;1,6&gt;), maxArray(&lt;8,3&gt;) )
+maxArray(&lt;1,6&gt;) = max(1, 6) = 6     maxArray(&lt;8,3&gt;) = max(8, 3) = 8
+sonuç = max(6, 8) = 8        // toplam 7 çağrı</code></pre>
+  <p>Temel durum: dizide tek eleman varsa o elemandır.</p>
+
+  <h3 id="r-ver">Özyineleme ve verimlilik</h3>
+  <ul>
+    <li>Verimsizlik kaynakları: <b>fonksiyon çağrısı ek yükü</b> (yerel değişkenler, dönüş adresi vb. kayıt tutma) ve bazı algoritmaların <b>doğasındaki verimsizlik</b>.</li>
+    <li>binarySearch ve solveTowers (Hanoi) istisnadır; oldukça verimlidirler.</li>
+    <li>Kural: Özyinelemeli çözüm verimsizse ve açık, verimli bir <b>yinelemeli (iterative)</b> çözüm varsa özyinelemeyi kullanma.</li>
+    <li><b>Kuyruk özyinelemesi (tail recursion):</b> özyinelemeli çağrının fonksiyonun <b>yaptığı son işlem</b> olması. writeBackward kuyruk özyinelemelidir ve kolayca <code>while</code> döngüsüne çevrilir.</li>
+  </ul>
+  <pre><code>void writeBackward(string s) {       // yinelemeli sürüm
+    int length = s.size();
+    while (length &gt; 0) { cout &lt;&lt; s.substr(length-1, 1); length--; }
+}</code></pre>
+  <div class="trap"><b>Tuzak:</b> <code>fact</code> kuyruk özyinelemeli <b>değildir</b>: çağrıdan sonra hâlâ <code>n *</code> çarpması yapılır. <code>writeVertical</code> da değildir: çağrıdan sonra <code>cout</code> var.</div>
+  <div class="topic-actions">
+    <a class="btn primary" href="#test" data-quiz="rec">Özyineleme testini çöz</a>
+    <button class="btn" data-done="rec">Bitirdim olarak işaretle</button>
+  </div>
+</article>
+
+<!-- ============ TEST ============ -->
+<section class="view" id="v-test" hidden>
+  <div id="quizSetup">
+    <h2>Test</h2>
+    <p class="muted">Konu ve soru sayısını seç. Her sorudan sonra doğru cevabı ve açıklamasını görürsün. Yanlış yaptıkların “Yanlışlarım”a eklenir.</p>
+    <h4>Konu</h4>
+    <div class="chips" id="topicChips"></div>
+    <h4>Soru sayısı</h4>
+    <div class="chips" id="countChips"></div>
+    <p class="muted" id="poolInfo" style="font-size:14px"></p>
+    <button class="btn primary wide" id="startQuiz" style="margin-top:8px">Testi başlat</button>
+    <div class="panel" id="statsPanel">
+      <h4 style="margin-top:0">Konu bazında durumun</h4>
+      <div class="rows" id="statRows"></div>
+      <button class="btn wide" id="resetStats" style="margin-top:12px">İstatistikleri sıfırla</button>
+      <p class="muted" id="resetConfirm" hidden style="font-size:14px">Emin misin? <button class="btn" id="resetYes" style="padding:6px 12px">Evet, sıfırla</button></p>
+    </div>
+  </div>
+  <div id="quizRun" hidden>
+    <div class="panel">
+      <div class="qhead"><span id="qTopic"></span><span id="qCount"></span></div>
+      <div class="qprog"><i id="qBar" style="width:0"></i></div>
+      <div class="qtext" id="qText"></div>
+      <pre id="qCode" hidden><code></code></pre>
+      <div class="opts" id="qOpts"></div>
+      <div class="explain" id="qExplain" hidden></div>
+      <div class="qnav">
+        <button class="btn" id="qQuit">Bitir</button>
+        <button class="btn primary" id="qNext" disabled>Sonraki</button>
+      </div>
+    </div>
+  </div>
+  <div id="quizEnd" hidden>
+    <div class="panel">
+      <div class="eyebrow">Sonuç</div>
+      <div class="result-big" id="rScore"></div>
+      <p class="muted" id="rMsg"></p>
+      <div class="rows" id="rRows"></div>
+      <div class="qnav" style="flex-wrap:wrap">
+        <button class="btn primary" id="rWrong">Yanlışları tekrar çöz</button>
+        <button class="btn" id="rAgain">Yeni test</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KARTLAR ============ -->
+<section class="view" id="v-kartlar" hidden>
+  <h2>Ezber kartları</h2>
+  <p class="muted">Karta dokun, cevabı gör. “Biliyorum” dediğin kartlar desteden çıkar.</p>
+  <div class="chips" id="cardChips"></div>
+  <div class="flash"><div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Kartı çevir">
+    <div class="face front"><div class="eyebrow" id="fTopic"></div><div class="q" id="fQ"></div><div class="hint">çevirmek için dokun</div></div>
+    <div class="face back"><div class="eyebrow">Cevap</div><div class="a" id="fA"></div></div>
+  </div></div>
+  <p class="muted" id="fCount" style="text-align:center;font:600 13px var(--f-mono)"></p>
+  <div class="qnav">
+    <button class="btn" id="fNo">Bilmiyorum</button>
+    <button class="btn primary" id="fYes">Biliyorum</button>
+  </div>
+  <button class="btn wide" id="fReset" style="margin-top:8px">Desteyi sıfırla</button>
+</section>
+
+<!-- ============ ARAÇLAR ============ -->
+<section class="view" id="v-araclar" hidden>
+  <h2>Adım adım araçlar</h2>
+  <p class="muted">Sınavda elle yapacağın işlemleri burada dene, her adımı tabloda gör.</p>
+
+  <div class="tool">
+    <h3>Infix → Postfix</h3>
+    <div class="inrow"><input id="inInfix" value="a - b / (c + d * e)" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Infix ifade"><button class="btn primary" id="goInfix">Dönüştür</button></div>
+    <div class="out" id="outInfix"></div>
+    <div class="tbl"><table id="tblInfix"></table></div>
+  </div>
+
+  <div class="tool">
+    <h3>Postfix hesaplama</h3>
+    <p class="muted" style="font-size:14px">Sayıları boşlukla ayır. Hepsi tek haneliyse boşluksuz da olur.</p>
+    <div class="inrow"><input id="inPost" value="6 5 2 3 + 8 * + 3 + *" autocomplete="off" spellcheck="false" aria-label="Postfix ifade"><button class="btn primary" id="goPost">Hesapla</button></div>
+    <div class="out" id="outPost"></div>
+    <div class="tbl"><table id="tblPost"></table></div>
+  </div>
+
+  <div class="tool">
+    <h3>Dengeli parantez kontrolü</h3>
+    <div class="inrow"><input id="inParen" value="(()}" autocomplete="off" spellcheck="false" aria-label="Parantez dizisi"><button class="btn primary" id="goParen">Kontrol et</button></div>
+    <div class="out" id="outParen"></div>
+    <div class="tbl"><table id="tblParen"></table></div>
+  </div>
+
+  <div class="tool">
+    <h3>Dairesel kuyruk (sayaçlı)</h3>
+    <p class="muted" style="font-size:14px">front = 0, rear = −1, count = 0 ile başlar. enqueue: <code>rear = (rear+1) % size</code>. dequeue: <code>front = (front+1) % size</code>.</p>
+    <div class="inrow">
+      <input id="cqVal" placeholder="değer" style="flex:0 1 110px" autocomplete="off" aria-label="Eklenecek değer">
+      <button class="btn primary" id="cqEnq">enqueue</button>
+      <button class="btn" id="cqDeq">dequeue</button>
+      <button class="btn" id="cqReset">sıfırla</button>
+    </div>
+    <div class="cq"><div class="cells" id="cqCells"></div></div>
+    <div class="out" id="cqState"></div>
+    <div class="log" id="cqLog"></div>
+  </div>
+
+  <div class="tool">
+    <h3>Yığın (stack) oyun alanı</h3>
+    <div class="inrow">
+      <input id="stVal" placeholder="değer" style="flex:0 1 110px" autocomplete="off" aria-label="Push edilecek değer">
+      <button class="btn primary" id="stPush">push</button>
+      <button class="btn" id="stPop">pop</button>
+      <button class="btn" id="stReset">sıfırla</button>
+    </div>
+    <div class="out" id="stState"></div>
+    <div class="log" id="stLog"></div>
+  </div>
+</section>
+</div>
+
+<nav class="tabs" aria-label="Bölümler">
+  <a href="#konular" data-tab="konular"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Konular</a>
+  <a href="#test" data-tab="test"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 9l2 2 4-4M8 16h8"/></svg>Test</a>
+  <a href="#kartlar" data-tab="kartlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 6V4h14v14h-4"/></svg>Kartlar</a>
+  <a href="#araclar" data-tab="araclar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="14" width="14" height="6" rx="1"/><rect x="5" y="8" width="14" height="6" rx="1"/><path d="M12 2v4M9 5l3-3 3 3"/></svg>Araçlar</a>
+</nav>
+
+<script>
+(function(){
+"use strict";
+/* ---------- Konular ---------- */
+const TOPICS = {
+  ptr:   {name:"Pointers", sub:"Adres, aritmetik, new/delete, leak", view:"pointer", lec:"Ders 1 · 86 slayt",
+          svg:'<rect x="2" y="12" width="18" height="16" rx="3"/><path d="M20 20h14"/><path d="M30 15l5 5-5 5"/><rect x="37" y="12" width="17" height="16" rx="3"/>'},
+  list:  {name:"Listeler", sub:"List ADT, bağlı liste kodları", view:"liste", lec:"Ders 2 · 63 slayt",
+          svg:'<rect x="1" y="13" width="14" height="14" rx="2"/><path d="M15 20h5"/><rect x="20" y="13" width="14" height="14" rx="2"/><path d="M34 20h5"/><rect x="39" y="13" width="14" height="14" rx="2"/>'},
+  stack: {name:"Yığınlar", sub:"LIFO, postfix, parantez, N-Vezir", view:"yigin", lec:"Ders 4 · 95 slayt",
+          svg:'<rect x="16" y="28" width="24" height="9" rx="2"/><rect x="16" y="17" width="24" height="9" rx="2"/><rect x="16" y="6" width="24" height="9" rx="2"/><path d="M46 4v12M43 7l3-3 3 3"/>'},
+  queue: {name:"Kuyruklar", sub:"FIFO, front/rear, dairesel dizi", view:"kuyruk", lec:"Ders 5 · 72 slayt",
+          svg:'<rect x="6" y="13" width="11" height="14" rx="2"/><rect x="19" y="13" width="11" height="14" rx="2"/><rect x="32" y="13" width="11" height="14" rx="2"/><path d="M1 34h50M45 31l4 3-4 3"/>'},
+  rec:   {name:"Özyineleme", sub:"Temel durum, fact, ikili arama", view:"ozyineleme", lec:"Ders 6 · 59 slayt",
+          svg:'<rect x="2" y="4" width="50" height="32" rx="3"/><rect x="10" y="10" width="34" height="20" rx="3"/><rect x="18" y="15" width="18" height="10" rx="2"/>'}
+};
+const TKEYS = Object.keys(TOPICS);
+
+/* ---------- Soru bankası ---------- */
+const Q = [
+/* ===== POINTERS ===== */
+{t:"ptr", q:"Aşağıdaki tanımda iPtr4'ün tipi nedir?", c:"double *iPtr3, iPtr4;", o:["double","double*","int*","Derleme hatası"], a:0,
+ e:"* sadece hemen yanındaki isme uygulanır. iPtr3 double*, iPtr4 ise düz double'dır. İkisinin de pointer olması için: double *iPtr3, *iPtr4;"},
+{t:"ptr", q:"int *p; p'nin değeri 1000 iken p++ çalıştıktan sonra p'nin değeri ne olur? (int = 4 bayt)", o:["1004","1001","1008","1000"], a:0,
+ e:"Pointer aritmetiği temel tipin boyutu kadar ilerler. p++, bir sonraki int'i gösterir: 1000 + 4 = 1004."},
+{t:"ptr", q:"double *p; p = 2000 iken p++ sonrası p kaç olur?", o:["2008","2001","2004","2016"], a:0,
+ e:"sizeof(double) = 8 olduğu için p, 8 bayt ilerler: 2008."},
+{t:"ptr", q:"Kodun çıktısı nedir?", c:"int num[4] = {1,2,3,4}, *p;\np = num;\ncout << *p;\n++p;\ncout << *p;", o:["12","11","1 adres","23"], a:0, mono:true,
+ e:"p = num, p'nin num[0]'ı göstermesi demektir; *p = 1. ++p ile p num[1]'i gösterir; *p = 2. Çıktı: 12."},
+{t:"ptr", q:"Tekli & operatörü ne yapar?", o:["Operandının adresini döndürür","Pointer'ın gösterdiği değere erişir","İki değerin bit düzeyinde VE'sini alır","Referans tipli değişken tanımlar"], a:0,
+ e:"& (address-of / adres operatörü) tekli operatördür ve operandının bellek adresini verir. &x → x'in adresi."},
+{t:"ptr", q:"Dereferencing (*) operatörünün slaytta geçen diğer adı nedir?", o:["Indirection (dolaylı erişim) operatörü","Address operatörü","Scope operatörü","Member operatörü"], a:0,
+ e:"* pointer operatörü, indirection (dolaylı erişim) operatörü olarak da bilinir. İkili çarpma operatöründen farklıdır."},
+{t:"ptr", q:"p ve q iki pointer olsun. (p == q) ifadesi neyi kontrol eder?", o:["İkisinin aynı nesneyi gösterip göstermediğini","Gösterdikleri değerlerin eşit olup olmadığını","İkisinin de NULL olup olmadığını","Aynı tipte olup olmadıklarını"], a:0,
+ e:"p == q adresleri karşılaştırır, yani aynı nesneyi mi gösteriyorlar. *p == *q ise gösterilen değerlerin eşitliğini kontrol eder; nesneler farklı olabilir."},
+{t:"ptr", q:"dPtr = new double[20]; satırı heap'ten kaç bayt ayırır?", o:["160","20","80","8"], a:0,
+ e:"20 eleman × 8 bayt (double) = 160 bayt. dPtr ilk baytı gösterir."},
+{t:"ptr", q:"int *iPtr = new int(100); satırı ne yapar?", o:["4 bayt ayırır ve değeri 100 yapar","100 elemanlık int dizisi ayırır","100 bayt ayırır","iPtr'yi 100 adresine yönlendirir"], a:0,
+ e:"Parantez başlangıç değeridir: tek bir int (4 bayt), değeri 100. Dizi için köşeli parantez gerekir: new int[100]."},
+{t:"ptr", q:"dptr = new double[SIZE]; ile ayrılan dizi nasıl serbest bırakılmalıdır?", o:["delete [] dptr;","delete dptr;","free(dptr);","dptr = NULL;"], a:0,
+ e:"Dinamik dizi delete [] ile silinir. [] unutmak slayttaki yaygın hatalardan biridir. Sadece NULL atamak belleği geri vermez (leak)."},
+{t:"ptr", q:"Fonksiyon bittiğinde ne olur?", c:"void foo() {\n  int numElements;\n  cin >> numElements;\n  float *ptrArr = new float[numElements];\n  // dizi işlenir\n}", o:["Bellek sızıntısı (memory leak) oluşur","Dizi otomatik silinir","Dangling pointer oluşur","Derleme hatası verir"], a:0,
+ e:"numElements ve ptrArr (yerel değişkenler) yok edilir, dizinin adresi kaybolur, ama heap'teki dizi silinmez. Buna memory leak denir. Program durunca biter."},
+{t:"ptr", q:"delete ile serbest bırakılmış belleği gösteren pointer'ı kullanmaya çalışmaya ne denir?", o:["Dangling pointer","Memory leak","Shallow copy","Null pointer"], a:0,
+ e:"Silinmiş belleği gösteren pointer dangling (sarkan) pointer'dır. Bu yüzden delete'ten sonra pointer'a NULL atamak iyi uygulamadır."},
+{t:"ptr", q:"second = first; ardından delete [] second; çalışırsa first için ne söylenebilir?", o:["first artık serbest bırakılmış belleği gösterir (dangling)","first'in kendi kopyası vardır, etkilenmez","first otomatik NULL olur","first'in verisi second'a taşınır"], a:0,
+ e:"second = first sığ kopyadır (shallow copy): ikisi aynı belleği gösterir. O bellek silinince first de dangling olur. Çözüm derin kopya (deep copy)."},
+{t:"ptr", q:"Yerel değişkenler ve formal parametreler hangi bellek bölgesinde tutulur?", o:["Stack (çalışma zamanı yığını)","Heap","Global data","Program code"], a:0,
+ e:"Stack: yerel değişkenler ve formal parametreler, derleyici yönetir. Heap: dinamik (new), bellek ayırıcı yönetir. Global data: statik/global değişkenler."},
+{t:"ptr", q:"new operatörü bellek ayıramazsa (slayta göre) ne olur?", o:["Exception fırlatır (eski derleyicilerde NULL döner)","Her zaman 0 döndürür","Programı sessizce sürdürür","Stack'ten bellek alır"], a:0,
+ e:"Slayt: “If allocation fails, new throws an exception that terminates the program (or returns NULL on older compilers).”"},
+{t:"ptr", q:"Dolu bir dinamik diziyi (ptr, size) genişletmek için doğru sıra hangisidir?", o:["temp = new int[size*2] → kopyala → delete [] ptr → ptr = temp → size *= 2","delete [] ptr → temp = new int[size*2] → kopyala → ptr = temp","ptr = temp → kopyala → delete [] temp","temp = new int[size*2] → ptr = temp → kopyala → delete [] ptr"], a:0,
+ e:"Önce yeni dizi, sonra kopya, sonra eski dizi silinir, ptr yeni diziye bağlanır ve size güncellenir. Kopyalamadan silersen veri, silmeden ptr'yi değiştirirsen adres (leak) kaybolur."},
+{t:"ptr", q:"int num[4]; int *p = num; için hangisi YANLIŞTIR?", o:["num++ ile dizi adı bir sonraki elemanı gösterecek şekilde artırılabilir","p++ geçerlidir","p[2] ile num[2]'ye erişilebilir","num, &num[0] ile aynı adresi verir"], a:0,
+ e:"Dizi adı ilk elemanın adresidir ama değeri değiştirilemez; hep aynı konumu gösterir. Pointer değişkeni ise yeniden atanabilir ve [] ile indekslenebilir."},
+{t:"ptr", q:"Bir pointer fonksiyona DEĞERLE (by value) geçirilirse hangisi doğrudur?", o:["Gösterdiği nesne değiştirilebilir ama pointer'ın kendisi değiştirilemez","Ne nesne ne pointer değiştirilebilir","Hem nesne hem pointer kalıcı olarak değiştirilebilir","Sadece pointer değiştirilebilir"], a:0,
+ e:"Her iki geçirme yönteminde de pointer üzerinden işaret edilen nesne değiştirilebilir. Pointer argümanının kendisi yalnızca referansla geçirildiğinde değiştirilebilir."},
+{t:"ptr", q:"Slayttaki örnekte sizeof(p) (int *p) için verilen çıktı nedir?", o:["4","8","1","2"], a:0,
+ e:"Slayt çıktısı: “the size of p is 4” (32 bit sistem; pointer için 4 bayt). 64 bit sistemde 8 olur ama sınavda slayttaki değeri esas al."},
+{t:"ptr", q:"Pointer'lar üzerinde hangi aritmetik işlem desteklenmez?", o:["Çarpma (*)","Toplama (+)","Çıkarma (-)","Artırma (++)"], a:0,
+ e:"Pointer aritmetiğinde sadece dört işlem vardır: +, -, ++, --."},
+{t:"ptr", q:"if (!p) ifadesi neyi kontrol eder?", o:["p'nin NULL olup olmadığını","*p'nin 0 olup olmadığını","p'nin geçerli bir dizi olup olmadığını","p'nin silinip silinmediğini"], a:0,
+ e:"NULL false, diğer pointer değerleri true sayılır. Bu yüzden !p, p == NULL ile aynıdır."},
+{t:"ptr", q:"Derleyicinin verdiği varsayılan copy constructor pointer üyeli sınıflarda neye yol açabilir?", o:["Sığ kopyalamaya (shallow copy)","Derin kopyalamaya","Derleme hatasına","Otomatik delete'e"], a:0,
+ e:"Varsayılan copy constructor üye üye kopyalar; pointer adresleri kopyalanır, veri kopyalanmaz. Düzeltme: className(const className& otherObject); şeklinde kendi copy constructor'ını yazmak."},
+{t:"ptr", q:"Slayttaki tanıma göre ADT (Soyut Veri Tipi) nedir?", o:["Bir nesnenin ve üzerindeki işlemler kümesinin matematiksel tanımı","Bir ADT'yi gerçekleştiren algoritmalar kümesi","Bir problemi çözen adım adım süreç","Bellekte bitişik tutulan veri bloğu"], a:0,
+ e:"ADT: nesne + işlemler kümesinin matematiksel tanımı (uygulama içermez). Veri yapısı: bir ADT'yi gerçekleştiren algoritmalar kümesi. Algoritma: adım adım, dilden bağımsız süreç."},
+{t:"ptr", q:"Kodun çıktısı nedir?", c:"char myString[] = \"This is a string\";\nchar *str = myString;\nfor (int i = 0; str[i]; i++)\n    cout << str[i];", o:["This is a string","T","Sonsuz döngü","Derleme hatası"], a:0, mono:true,
+ e:"str[i] '\\0' (null karakter) olduğunda false olur ve döngü durur. Pointer [] ile indekslenebilir. Çıktı: This is a string."},
+{t:"ptr", q:"Hangisi slayttaki “new ve delete kullanımındaki yaygın hatalar” arasında YOKTUR?", o:["new ile ayrılan belleğe delete uygulamak","delete sonrası pointer'ı kullanmak","Dinamik diziyi silerken [] unutmak","new ile ayrılmamış belleğe delete uygulamak"], a:0,
+ e:"new ile ayrılan belleği delete etmek doğru kullanımdır. Hatalar: dangling pointer, memory leak, new ile ayrılmamış belleğe delete, dizide [] unutmak."},
+
+/* ===== LİSTELER ===== */
+{t:"list", q:"List ADT'de add(i, x) için i'nin geçerli aralığı nedir?", o:["0 ≤ i ≤ size","0 ≤ i < size","1 ≤ i ≤ size","0 < i < size"], a:0,
+ e:"add sona da ekleyebildiği için i = size geçerlidir. get/set/remove için ise 0 ≤ i < size."},
+{t:"list", q:"virtual double get(int i) const = 0; satırındaki “= 0” ne anlama gelir?", o:["Saf sanal (pure virtual) fonksiyon; sınıf soyuttur","Fonksiyon 0 döndürür","Varsayılan parametre 0'dır","Fonksiyon const değildir"], a:0,
+ e:"= 0, saf sanal fonksiyondur. List soyut temel sınıftır: ne yapılacağını (WHAT) tanımlar, nasıl yapılacağını (HOW) türetilmiş sınıflar (ArrayList, LinkedList) belirler."},
+{t:"list", q:"List arayüzünde sanal yıkıcı (virtual ~List() {}) neden gereklidir?", o:["Türetilmiş sınıfların doğru temizlenmesi için","Liste boyutunu sıfırlamak için","Saf sanal fonksiyonları çağırmak için","Kopya oluşturmak için"], a:0,
+ e:"Slayt: “Virtual destructor: essential for cleaning up derived classes.” Taban sınıf pointer'ı ile silinen türetilmiş nesnenin yıkıcısının çağrılmasını sağlar."},
+{t:"list", q:"Listenin tanımındaki “sıralı (ordered)” ifadesi ne demektir?", o:["Her elemanın listede belirli bir konumu vardır","Elemanlar küçükten büyüğe dizilmiştir","Elemanlar alfabetik sıradadır","Liste hep sıralı tutulmak zorundadır"], a:0,
+ e:"Ordered, konum demektir; sorted (değere göre sıralı) demek değildir. Elemanları sıralamak listenin doğal bir özelliği değildir."},
+{t:"list", q:"int arr[5] = {1,2,3,4,5}; cout << arr[10]; ne olur?", o:["Tanımsız davranış (undefined behavior)","Derleme hatası","0 yazar","Exception fırlatılır"], a:0,
+ e:"C++ dizilerinde yerleşik sınır denetimi yoktur. Sınır dışı erişim tanımsız davranıştır: çökme veya bellek bozulması olabilir."},
+{t:"list", q:"std::vector kapasitesi aşıldığında genellikle ne yapar?", o:["Kapasitesini iki katına çıkarır ve tüm elemanları yeni yere kopyalar","Sadece yeni elemanı ayrı bir bloğa koyar","Exception fırlatır","Eski elemanları siler"], a:0,
+ e:"Vektör genellikle iki katına büyür; mevcut tüm elemanlar yeni bellek konumuna kopyalanır, bu pahalıdır."},
+{t:"list", q:"Bağlı listenin diziye göre temel avantajı hangisidir?", o:["Bitişik bellek gerektirmez; ortaya ekleme kaydırma yapmadan pointer güncelleyerek yapılır","i. elemana sabit zamanda erişilir","Daha az bellek kullanır, pointer tutmaz","Sınır denetimi yapar"], a:0,
+ e:"Düğümler ayrı bloklarda durur ve pointer'larla bağlanır. Ekleme/silme kaydırma gerektirmez. Ama doğrudan indeksleme yoktur; i. elemana head'den dolaşarak gidilir."},
+{t:"list", q:"Boş listeye sırayla insertFront(\"a\"), insertFront(\"b\"), insertFront(\"c\") yapılıp print() çağrılırsa çıktı ne olur?", o:["c b a","a b c","a c b","c a b"], a:0, mono:true,
+ e:"Her insertFront yeni düğümü başa koyar; en son eklenen en öndedir. Liste: c → b → a."},
+{t:"list", q:"insertFront içinde satırlar şu sırayla yazılırsa ne olur?", c:"Node* p = new Node(val);\nhead = p;\np->next = head;", o:["Yeni düğüm kendisini gösterir, listenin geri kalanı kaybolur","Doğru çalışır","Liste ters döner","Derleme hatası"], a:0,
+ e:"head = p yapıldıktan sonra head artık p'dir; p->next = head, p->next = p olur. Eski listenin adresi kaybolur. Doğru sıra: p->next = head; head = p;"},
+{t:"list", q:"deleteFirst() içinde Node* t = head; satırı neden gereklidir?", o:["head ilerletildikten sonra eski ilk düğümü delete edebilmek için","Listenin boyutunu saymak için","head'i NULL yapmak için","Son düğümü bulmak için"], a:0,
+ e:"head = head->next sonrası eski düğümün adresi t'de kalır ve delete t ile serbest bırakılır. t olmasa eski düğüm silinemez (leak)."},
+{t:"list", q:"Bağlı listede head == nullptr ne anlama gelir?", o:["Liste boştur","Liste tek elemanlıdır","Son düğüme gelinmiştir","Liste dairesel bağlıdır"], a:0,
+ e:"head ilk düğümü gösterir; nullptr ise hiç düğüm yoktur. Kurucu head = nullptr, count = 0 ile boş liste başlatır."},
+{t:"list", q:"print() fonksiyonunda döngü koşulu while (walk->next != nullptr) yazılırsa ne olur?", o:["Son eleman yazdırılmaz; boş listede de nullptr erişimi olur","Doğru çalışır","İlk eleman yazdırılmaz","Sonsuz döngü"], a:0,
+ e:"walk son düğümdeyken next nullptr olduğu için döngü biter ve son düğüm basılmaz. Doğru koşul: while (walk != nullptr)."},
+{t:"list", q:"Student* ptr = &s1; için name üyesine erişimin doğru yolu hangisidir?", o:["ptr->name","ptr.name","*ptr.name","&ptr.name"], a:0,
+ e:"Pointer ile üyeye ok (->) operatörüyle erişilir. ptr->name, (*ptr).name ile aynıdır. *ptr.name öncelik yüzünden yanlıştır."},
+{t:"list", q:"Ardışık iki new isteğinin bitişik bellek vermemesinin nedeni olarak slaytta hangisi GEÇMEZ?", o:["Derleyicinin her new'de rastgele adres seçmesi","Heap parçalanması","Bellek hizalama ve dolgu","İşletim sisteminin ayırmaları farklı sayfalara koyması"], a:0,
+ e:"Slayttaki nedenler: heap parçalanması, hizalama/dolgu (8/16/32 bayt), OS'in ayrı bellek sayfaları kullanması."},
+{t:"list", q:"Heap yöneticisi boş bellek bloklarını nasıl takip eder?", o:["Serbest liste (bağlı liste) ile","Yığın (stack) ile","Sabit boyutlu dizi ile","Hash tablosu ile"], a:0,
+ e:"Heap yöneticisi boş blokların bir serbest listesini (free list, bağlı liste) tutar ve istenen boyut için yeterince büyük bir blok arar."},
+{t:"list", q:"Node sınıfındaki next üyesinin tipi nedir?", o:["Node*","string","int","Node"], a:0,
+ e:"next, aynı türden başka bir düğümün adresini tutar: Node*. Bu yüzden düğüm öz-referanslıdır (self-referential)."},
+{t:"list", q:"Slayta göre ADT'yi tanımlayan üç unsur hangisidir?", o:["Saklanan veri, izin verilen işlemler, işlemlerin kısıtları (ön/son koşul)","Sınıf, nesne, kalıtım","Head, tail, length","Stack, heap, global data"], a:0,
+ e:"ADT: kullanıcının bakışından davranışla tanımlanan matematiksel model. Unsurlar: veri, işlemler, kısıtlar (precondition/postcondition)."},
+{t:"list", q:"Kullanıcının listenin iç yapısını bilmeden sadece public metotlarla çalışmasına ne denir?", o:["Bilgi gizleme (information hiding)","Polimorfizm","Kalıtım","Dinamik bağlama"], a:0,
+ e:"İç gösterimi gizleyip iyi tanımlı bir arayüz sunmak bilgi gizlemedir; uygulama değişse bile kullanıcının kodu etkilenmez."},
+{t:"list", q:"Çift yönlü (doubly) bağlı listede her düğüm ne içerir?", o:["Veri, sonraki düğüme ve önceki düğüme pointer","Sadece veri ve sonraki düğüme pointer","Veri ve head'e pointer","İki veri alanı"], a:0,
+ e:"Tek yönlü düğüm sadece next tutar. Çift yönlü düğüm next ve prev tutar."},
+{t:"list", q:"5 elemanlı listede (10 20 30 40 50) son elemanın konumu nedir?", o:["4","5","0","n"], a:0,
+ e:"Konumlar 0'dan n−1'e kadardır: n = 5, son konum 4."},
+{t:"list", q:"Hangi durumda vektör yerine dizi kullanmak daha uygundur (slayt)?", o:["Boyut derleme zamanında biliniyor ve ek yüksüz hızlı erişim gerekiyorsa","Boyut çalışma zamanında belirleniyorsa","push_back() gerekiyorsa","Otomatik bellek yönetimi isteniyorsa"], a:0,
+ e:"Dizi: boyut derleme zamanında belli, sıkı bellek kısıtı, ek yüksüz hızlı rastgele erişim. Diğer seçenekler vektörün kullanım durumlarıdır."},
+{t:"list", q:"Student* students = new Student[3]; ile ayrılan bellek nasıl serbest bırakılır?", o:["delete[] students;","delete students;","delete students[3];","students = nullptr;"], a:0,
+ e:"Nesne dizisi new[] ile ayrıldığı için delete[] ile silinir; her elemanın yıkıcısı çağrılır."},
+
+/* ===== YIĞINLAR ===== */
+{t:"stack", q:"Yığının çalışma prensibi hangisidir?", o:["LIFO: son giren ilk çıkar","FIFO: ilk giren ilk çıkar","Önceliğe göre çıkış","Rastgele erişim"], a:0,
+ e:"Ekleme ve çıkarma aynı uçtan (top) yapılır; en son eklenen ilk çıkar: Last-In First-Out."},
+{t:"stack", q:"Boş yığına sırayla push(8), push(860), push(-60), push(10), pop(), pop() yapılıyor. Tepede hangi eleman kalır?", o:["860","-60","8","10"], a:0, mono:true,
+ e:"Yığın (alt→üst): 8 860 -60 10. İki pop 10 ve -60'ı çıkarır. Kalan: 8 860, tepe 860."},
+{t:"stack", q:"push(1), push(2), push(3), pop(), push(4), pop(), pop() işlemlerinde pop'ların döndürdüğü değerler sırasıyla nedir?", o:["3, 4, 2","3, 2, 1","1, 2, 3","3, 4, 1"], a:0, mono:true,
+ e:"1 2 3 → pop 3 → 1 2 → push 4 → 1 2 4 → pop 4 → pop 2. Sonuç: 3, 4, 2."},
+{t:"stack", q:"Hangisi slaytta sayılan 4 yığın uygulama kategorisinden biri DEĞİLDİR?", o:["Yazdırma işlemlerini sıraya alma (print spooling)","Veriyi tersine çevirme","Parantez eşleştirme (ayrıştırma)","Geri izleme (labirent, N-Vezir)"], a:0,
+ e:"Yığın kategorileri: tersine çevirme, ayrıştırma (parantez), kullanımı erteleme (infix→postfix ve değerlendirme), geri izleme. Print spooling bir KUYRUK uygulamasıdır."},
+{t:"stack", q:"a + b * c ifadesinin postfix karşılığı nedir?", o:["a b c * +","a b + c *","+ a * b c","a b c + *"], a:0, mono:true,
+ e:"* önceliklidir: a + (b c *) → a b c * +."},
+{t:"stack", q:"(A + B) * C ifadesinin postfix karşılığı nedir?", o:["A B + C *","A B C + *","A B C * +","* + A B C"], a:0, mono:true,
+ e:"Parantez önce: (A B +) * C → A B + C *. Postfix'te parantez gerekmez."},
+{t:"stack", q:"a - b / (c + d * e) ifadesinin postfix karşılığı nedir?", o:["a b c d e * + / -","a b - c d e * + /","a b c d + e * / -","a b c d e + * / -"], a:0, mono:true,
+ e:"İçten dışa: d*e → d e *, c + … → c d e * +, b / (…) → b c d e * + /, a − … → a b c d e * + / -."},
+{t:"stack", q:"(a + b) * (c - d) ifadesinin postfix karşılığı nedir?", o:["a b + c d - *","a b c d + - *","a b + * c d -","a b + c - d *"], a:0, mono:true,
+ e:"Sol parantez → a b +, sağ parantez → c d -, sonra * → a b + c d - *."},
+{t:"stack", q:"((a + b) * c - (d - e)) / (f + g) ifadesinin postfix karşılığı nedir?", o:["a b + c * d e - - f g + /","a b + c * d e - f g + - /","a b c + * d e - - f g + /","a b + c d e - * - f g + /"], a:0, mono:true,
+ e:"(a+b)*c → a b + c *. (d−e) → d e -. Aradaki − → a b + c * d e - -. (f+g) → f g +. En son / → a b + c * d e - - f g + /."},
+{t:"stack", q:"a + b + c ifadesinin postfix karşılığı nedir? (aynı öncelik, soldan birleşim)", o:["a b + c +","a b c + +","+ + a b c","a + b c +"], a:0, mono:true,
+ e:"Aynı öncelikte işlemler soldan sağa yapılır: (a+b)+c → a b + c +."},
+{t:"stack", q:"6 5 2 3 + 8 * + 3 + * postfix ifadesinin değeri nedir?", o:["288","48","45","240"], a:0, mono:true,
+ e:"2+3=5 → 5*8=40 → 5+40=45 → 45+3=48 → 6*48=288."},
+{t:"stack", q:"5 3 * 2 + 6 4 * + postfix ifadesinin değeri nedir?", o:["41","17","24","39"], a:0, mono:true,
+ e:"5*3=15 → 15+2=17 → 6*4=24 → 17+24=41. (Infix: 5*3+2+6*4)"},
+{t:"stack", q:"8 3 - 2 * postfix ifadesinin değeri nedir?", o:["10","-10","2","22"], a:0, mono:true,
+ e:"'-' gelince önce 3 (sağ), sonra 8 (sol) çıkar: 8−3=5. Sonra 5*2=10. Çıkarma/bölmede ilk pop edilen SAĞ işlenendir."},
+{t:"stack", q:"Postfix değerlendirmede bir işleç okunduğunda ne yapılır?", o:["Yığından iki eleman pop edilir, işlem uygulanır, sonuç push edilir","İşleç yığına push edilir","Bir eleman pop edilip çıktıya yazılır","Yığın boşaltılır"], a:0,
+ e:"İşlenen → push. İşleç → üstteki iki eleman pop, işlem, sonuç tekrar push. Sonunda yığında tek değer kalır."},
+{t:"stack", q:"Infix→postfix dönüşümünde sol parantez '(' için hangisi doğrudur?", o:["İfadeden okunurken en yüksek, yığının içindeyken en düşük önceliklidir","Her zaman en düşük önceliklidir","Doğrudan çıktıya yazılır","Yığına hiç konmaz"], a:0,
+ e:"'(' okununca hemen push edilir (en yüksek öncelik). Yığında en düşük öncelikli olduğu için diğer işleçler onun üstüne konur ve onu pop ettirmez."},
+{t:"stack", q:"Infix→postfix dönüşümünde ')' okunduğunda ne yapılır?", o:["'(' görülene kadar yığındakiler pop edilip çıktıya yazılır; parantezler atılır","')' yığına push edilir","Yığının tamamı boşaltılır","')' çıktıya yazılır"], a:0,
+ e:"Sol paranteze ulaşılıncaya kadar işleçler çıktıya aktarılır, '(' yığından çıkarılıp atılır. Parantezler çıktıya hiç yazılmaz."},
+{t:"stack", q:"a - b / (c + d * e) dönüştürülürken '*' yığına push edildikten hemen sonra yığının içeriği (alttan üste) nedir?", o:["- / ( + *","- / *","- + *","/ ( + *"], a:0, mono:true,
+ e:"'-' push → '/' (daha yüksek) push → '(' push → '+' ('(' üstüne) push → '*' ('+'dan yüksek) push. Yığın: - / ( + *. Çıktı o an: a b c d."},
+{t:"stack", q:"Infix→postfix'te yığının tepesinde '*' varken '+' gelirse ne olur?", o:["'*' pop edilip çıktıya yazılır, sonra '+' push edilir","'+' doğrudan '*' üstüne push edilir","'+' çıktıya yazılır","Hata verilir"], a:0,
+ e:"Gelen işlecin önceliği tepedekinden küçük veya eşit olduğu sürece tepedeki pop edilip çıktıya yazılır. + < * olduğu için * çıkar, sonra + push edilir."},
+{t:"stack", q:"“{ [ } ]” dizisi için parantez kontrolü ne sonuç verir?", o:["Dengesiz: '}' geldiğinde pop edilen '[' eşleşmez","Dengeli","Dengesiz: sonda yığın boş değil","Dengesiz: kapanışta yığın boş"], a:0, mono:true,
+ e:"{ push, [ push, } gelince pop → '[' çıkar, '{' beklenirdi: tür uyuşmazlığı, hata."},
+{t:"stack", q:"“(()” dizisi neden dengeli değildir?", o:["Dizi bittiğinde yığında bir '(' kalır","Kapanış geldiğinde yığın boştur","Tür uyuşmazlığı vardır","İlk karakter kapanıştır"], a:0, mono:true,
+ e:"( ( push, ) bir tanesini çıkarır. Sonda yığında '(' kalır. Dize sonunda yığın boş değilse dengesizdir."},
+{t:"stack", q:"Slayttaki “(()}” örneğinde hata hangi karakterde ve neden oluşur?", o:["'}' karakterinde; pop edilen '(' , '{' ile eşleşmez","İkinci '(' karakterinde; yığın dolu","')' karakterinde; yığın boş","Dizenin sonunda; yığın boş değil"], a:0, mono:true,
+ e:"( ( push → ) pop '(' eşleşir → } pop '(' ama '{' gerekiyordu. Hata bildirilir ve program sonlanır."},
+{t:"stack", q:"N-Vezir algoritmasında yığında ne saklanır?", o:["Yerleştirilen her vezirin satır ve sütun bilgisi","Sadece dolu satır sayısı","Tahtanın tamamı","Çakışan vezirlerin listesi"], a:0,
+ e:"Her yerleştirme (SATIR, SÜTUN) kaydı olarak push edilir. Ayrıca kaç satırın dolu olduğunu tutan 'filled (dolu)' tamsayısı vardır."},
+{t:"stack", q:"N-Vezir'de geri izleme (backtracking) sırasında yığın tamamen boşalırsa bu ne anlama gelir?", o:["Problemin çözümü yoktur","Çözüm bulunmuştur","İlk vezir 1. sütuna geri konmalıdır","filled = N olmuştur"], a:0,
+ e:"İlk vezirin de denenecek yeri kalmamıştır; problemin çözümü yoktur."},
+{t:"stack", q:"N-Vezir'de geri izlemeden sonra önceki satırdaki vezir hangi sütundan devam eder?", o:["Kaldığı sütundan bir sağa kayarak devam eder","1. sütundan yeniden başlar","Son sütundan başlar","Rastgele bir sütundan"], a:0,
+ e:"İleri giderken yeni satırda hep 1. sütundan başlanır. Geri izlerken kalınan yerden devam edilir. Yığın sayesinde önceki konum bilinir."},
+{t:"stack", q:"Boş bir yığına pop uygulamadan önce ne yapılmalıdır?", o:["isEmpty() ile boş olup olmadığı kontrol edilmelidir","isFull() kontrol edilmelidir","returnTop() çağrılmalıdır","Yığın sıfırlanmalıdır"], a:0,
+ e:"Boş yığına pop uygulanmamalı (underflow). Çıkarmadan önce isEmpty() kontrolü yapılır. isFull() push öncesi kontrol edilir."},
+{t:"stack", q:"Yığını dizi ile gerçekleştirmenin temel dezavantajı nedir?", o:["Dizinin boyutu önceden belirlenmelidir","Push işlemi yavaştır","Pop işlemi elemanları kaydırır","Tepe elemana erişilemez"], a:0,
+ e:"Slayt: dizi en basit yöntemdir ama boyut önceden belirlenmelidir. Ayrıca mevcut konumu (top) tutan ek bir değişken gerekir."},
+{t:"stack", q:"A + B ifadesinin prefix (ön gösterim) karşılığı nedir?", o:["+ A B","A B +","A + B","+ B A"], a:0, mono:true,
+ e:"Prefix'te işleç işlenenlerden önce gelir: + A B. Postfix: A B +. Infix: A + B."},
+{t:"stack", q:"a + (b * c / d) ifadesinin postfix karşılığı nedir?", o:["a b c * d / +","a b c d / * +","a b c * + d /","a b * c d / +"], a:0, mono:true,
+ e:"* ve / aynı önceliktedir ve soldan birleşir: b c * önce, sonra d / → b c * d /. Son olarak a … + → a b c * d / +."},
+
+/* ===== KUYRUKLAR ===== */
+{t:"queue", q:"Kuyruğun çalışma prensibi hangisidir?", o:["FIFO: ilk giren ilk çıkar","LIFO: son giren ilk çıkar","Sadece aynı uçtan ekleme/çıkarma","Değere göre çıkış"], a:0,
+ e:"Rear'dan ekle, front'tan çıkar: First-In First-Out. İlk gelen ilk hizmet alır."},
+{t:"queue", q:"Aşağıdaki işlemlerde ekrana yazılan değerler sırasıyla nedir?", c:"enqueue(q,9); enqueue(q,10); enqueue(q,50);\nx = dequeue(q); Print(x);\nenqueue(q,20); enqueue(q,-40);\nx = dequeue(q); Print(x);\nenqueue(q,40);\nx = dequeue(q); Print(x);\nenqueue(q,30);", o:["9, 10, 50","50, -40, 40","9, 50, 40","50, 10, 9"], a:0, mono:true,
+ e:"Kuyruk: 9 10 50 → çık 9 → 10 50 20 -40 → çık 10 → 50 20 -40 40 → çık 50 → 20 -40 40 30."},
+{t:"queue", q:"Aynı örnekte (9,10,50 / deq / 20,-40 / deq / 40 / deq / 30) tüm işlemler bittiğinde kuyruğun içeriği (front→rear) nedir?", o:["20, -40, 40, 30","30, 40, -40, 20","50, 20, -40, 40, 30","-40, 40, 30"], a:0, mono:true,
+ e:"Çıkanlar 9, 10, 50. Kalanlar eklenme sırasıyla: 20, -40, 40, 30."},
+{t:"queue", q:"Doğrusal dizi ile kuyrukta başlangıç değerleri nedir?", o:["front = 0, rear = -1","front = -1, rear = 0","front = 0, rear = 0","front = 1, rear = 1"], a:0,
+ e:"Slayt: q->rear = -1, q->front = 0. Her enqueue'da rear, her dequeue'da front bir artar."},
+{t:"queue", q:"Doğrusal dizi kuyruğunda kuyruk ne zaman boştur?", o:["rear < front","rear == front","front == 0","rear == -1 ve front == -1"], a:0,
+ e:"queueEmpty: if (rear < front) return TRUE. Başlangıçta rear=-1 < front=0, boş."},
+{t:"queue", q:"Doğrusal dizi kuyruğunda eleman sayısı hangi formülle hesaplanır?", o:["rear - front + 1","rear - front","front - rear + 1","rear + front"], a:0,
+ e:"Örnek: front=2, rear=5 → indeks 2,3,4,5 → 5−2+1 = 4 eleman."},
+{t:"queue", q:"Slayttaki enqueue kodunda doğru işlem sırası hangisidir?", o:["rear++; entry[rear] = item;","entry[rear] = item; rear++;","front++; entry[front] = item;","entry[front] = item; rear++;"], a:0,
+ e:"rear −1'den başladığı için önce artırılır (0 olur), sonra yazılır. dequeue'da ise önce entry[front] okunur, sonra front++."},
+{t:"queue", q:"Doğrusal (linear) dizi kuyruğunun temel sorunu nedir?", o:["Çıkarılan elemanların yerleri tekrar kullanılmaz; boş yer olsa bile ekleme yapılamayabilir","Ekleme işlemi elemanları kaydırır","FIFO sırası bozulur","front hiçbir zaman artmaz"], a:0,
+ e:"rear sürekli artar ve dizinin sonuna gelince, önde boş gözler olsa bile ekleme yapılamaz. Çözüm: dairesel (circular) dizi."},
+{t:"queue", q:"Dairesel dizide indeksi bir artırmanın modulo ile yazılışı hangisidir?", o:["i = (i + 1) % max;","i = (i % max) + 1;","i = i + 1 % max;","i = (i - 1) % max;"], a:0,
+ e:"(i+1) % max, i son indeksteyken (max−1) 0'a döner. Dikkat: i + 1 % max öncelik yüzünden i + 1 olur (% önce)."},
+{t:"queue", q:"Boyutu 8 olan dairesel dizide rear = 7 iken bir enqueue yapılırsa yeni rear kaç olur?", o:["0","8","1","7"], a:0, mono:true,
+ e:"(7 + 1) % 8 = 0. Dizinin başına sarılır."},
+{t:"queue", q:"Boyut 5, front = 2, rear = 4 (C, D, E dolu) olan dairesel kuyruğa F eklenirse F hangi indekse yerleşir?", o:["0","5","1","3"], a:0, mono:true,
+ e:"rear = (4 + 1) % 5 = 0. Dizinin son gözü dolu olsa da baştaki boş göz kullanılır."},
+{t:"queue", q:"Dairesel dizide neden “rear < front” artık boşluk testi olarak kullanılamaz?", o:["rear başa sarıldığında kuyruk doluyken bile rear < front olabilir","rear hiçbir zaman front'tan küçük olmaz","front hep 0'dır","Modulo işlemi rear'ı negatif yapar"], a:0,
+ e:"Örnek: front=2, rear=0 iken kuyrukta C, D, E, F vardır ama rear < front'tur. Bu yüzden başka boşluk testleri (count, flag, bir göz boş) kullanılır."},
+{t:"queue", q:"“front, ilk elemandan bir önceki konumu gösterir” yaklaşımında kuyruk ne zaman BOŞTUR?", o:["front == rear","front == rear + 1","rear < front","rear == size - 1"], a:0,
+ e:"front ilk elemandan bir önceyi, rear son elemanı gösterir. İkisi eşitse arada eleman yoktur, kuyruk boştur. Dolu: front == (rear + 1) % size."},
+{t:"queue", q:"“Bir konumu boş bırakılan dairesel dizi” yaklaşımının dezavantajı nedir?", o:["Dolu ve boşu ayırt etmek için bir göz hep kullanılmadan kalır","Elemanlar kaydırılmak zorunda","Ek bir sayaç değişkeni gerekir","FIFO sırası bozulur"], a:0,
+ e:"Dolu koşulu front == rear + 1 (mod) olduğundan size gözlü dizide en fazla size−1 eleman tutulur."},
+{t:"queue", q:"Hangisi slaytta sayılan kuyruk gerçekleştirme yöntemlerinden biri DEĞİLDİR?", o:["İki yığın kullanan özyinelemeli dizi","Fiziksel model (front hep ilk konumda)","Sayaç kullanılan dairesel dizi","Boolean flag kullanılan dairesel dizi"], a:0,
+ e:"Slayttaki 6 yöntem: fiziksel model, iki indeksli doğrusal dizi, bir konumu boş dairesel, boolean flag'li dairesel, sayaçlı dairesel, özel değerli dairesel."},
+{t:"queue", q:"Kuyruklar için “fiziksel model”in dezavantajı nedir?", o:["Her silmede tüm elemanlar bir konum kaydırılır","Boş yerler tekrar kullanılmaz","Bir göz boş kalır","Dolu/boş ayırt edilemez"], a:0,
+ e:"Fiziksel modelde front hep 0'dadır; öndeki eleman silinince diğerleri bir yukarı kaydırılır. Bu O(n) maliyetlidir."},
+{t:"queue", q:"Hangisi bilgisayar sistemlerinde kuyruk uygulamasıdır?", o:["Yazdırma işlerinin sıraya alınması (print spooling)","Parantez eşleştirme","Infix→postfix dönüşümü","N-Vezir geri izleme"], a:0,
+ e:"Kuyruk uygulamaları: tek işlemcide iş sıralama, print spooling, ağda paket sıralama. Diğer üçü yığın uygulamasıdır."},
+{t:"queue", q:"Boyutu 5 olan sayaçlı dairesel kuyruk (front=0, rear=-1, count=0). Sırasıyla enqueue A,B,C,D; dequeue; dequeue; enqueue E; enqueue F. Son durumda front, rear ve count nedir?", o:["front=2, rear=0, count=4","front=2, rear=5, count=4","front=0, rear=4, count=6","front=2, rear=1, count=4"], a:0, mono:true,
+ e:"A0 B1 C2 D3 (rear=3). İki dequeue: front=2. E → rear=4. F → rear=(4+1)%5=0. Elemanlar C D E F → count=4."},
+{t:"queue", q:"Yığın ile kuyruk arasındaki temel yapısal fark hangisidir?", o:["Yığında ekleme/silme aynı uçtan, kuyrukta farklı uçlardan yapılır","Kuyrukta ekleme/silme aynı uçtan yapılır","Yığın dinamik, kuyruk statiktir","Kuyruk sadece dizi ile yazılabilir"], a:0,
+ e:"Stack: top'tan push ve pop (LIFO). Queue: rear'dan enqueue, front'tan dequeue (FIFO)."},
+{t:"queue", q:"MAXQUEUE = 20 olan doğrusal kuyrukta (rear −1'den başlıyor) son geçerli rear değeri nedir?", o:["19","20","21","0"], a:0, mono:true,
+ e:"entry[20] dizisinin indeksleri 0–19'dur. rear == MAXQUEUE − 1 = 19 olduğunda kuyruk doludur."},
+{t:"queue", q:"Boş kuyruğa dequeue uygulanırsa slayttaki kod ne yapar?", o:["“Queue is empty” yazar ve exit(1) ile çıkar","−1 döndürür","front'u azaltır","Hiçbir şey yapmaz"], a:0,
+ e:"dequeue önce queueEmpty() kontrol eder; boşsa stderr'e “Queue is empty” yazıp programdan çıkar. enqueue'da da doluysa “Queue is full”."},
+
+/* ===== ÖZYİNELEME ===== */
+{t:"rec", q:"Temel durumu (base case) olmayan özyinelemeli fonksiyonda ne olur?", o:["Sonsuz özyineleme ve stack overflow","Fonksiyon bir kez çalışıp durur","Derleme hatası","Fonksiyon 0 döndürür"], a:0,
+ e:"Temel durum, fonksiyonun kendini çağırmayı bırakıp doğrudan sonuç döndürdüğü koşuldur. Yoksa çağrılar hiç bitmez ve yığın taşar."},
+{t:"rec", q:"fact(3) çağrıldığında fact fonksiyonu toplam kaç kez çağrılır?", c:"int fact(int n) {\n  if (n == 0) return 1;\n  else return n * fact(n-1);\n}", o:["4","3","6","5"], a:0, mono:true,
+ e:"fact(3) → fact(2) → fact(1) → fact(0). Toplam 4 çağrı; sonuç 6."},
+{t:"rec", q:"power(2, 3) çağrısının sonucu nedir?", c:"int power(int x, int n) {\n  if (n < 0) { cout << \"Illegal argument\"; exit(1); }\n  if (n > 0) return power(x, n-1) * x;\n  else return 1;\n}", o:["8","6","9","16"], a:0, mono:true,
+ e:"power(2,3) = power(2,2)*2 = (power(2,1)*2)*2 = ((power(2,0)*2)*2)*2 = 1*2*2*2 = 8."},
+{t:"rec", q:"writeVertical(1234) çağrısının çıktısı nedir? (her satıra bir rakam)", c:"void writeVertical(int n) {\n  if (n < 10) cout << n << endl;\n  else {\n    writeVertical(n / 10);\n    cout << (n % 10) << endl;\n  }\n}", o:["1 2 3 4","4 3 2 1","1234","4"], a:0, mono:true,
+ e:"Önce n/10 için özyinelemeli çağrı (son rakam hariç hepsi yazılır), sonra n%10 yazılır. 1, 2, 3, 4 alt alta."},
+{t:"rec", q:"Aşağıdaki fonksiyonla f(123) çağrısının çıktısı nedir?", c:"void f(int n) {\n  if (n < 10) cout << n << endl;\n  else {\n    cout << (n % 10) << endl;\n    f(n / 10);\n  }\n}", o:["3 2 1","1 2 3","3","123"], a:0, mono:true,
+ e:"Bu sürümde yazdırma özyinelemeli çağrıdan ÖNCE. 123 → 3 yaz, f(12) → 2 yaz, f(1) → 1. Rakamlar ters çıkar."},
+{t:"rec", q:"writeBackward(\"cat\") ne yazar?", o:["tac","cat","t","act"], a:0, mono:true,
+ e:"Son karakter yazılır (t), sonra “ca” için çağrı: a, sonra “c”: c, sonra boş dizi (temel durum). Çıktı: tac."},
+{t:"rec", q:"writeBackward fonksiyonunun temel durumu nedir?", o:["Boş dizi: hiçbir şey yapma","Tek karakterli dizi: karakteri yaz","Dizi uzunluğu 2","İlk karakter boşluk"], a:0,
+ e:"length > 0 değilse (length == 0) fonksiyon hiçbir şey yapmaz. Her çağrıda uzunluk n'den n−1'e düşer."},
+{t:"rec", q:"İkili aramanın (binary search) ön koşulu nedir?", o:["Dizi sıralı olmalıdır","Dizi boyutu 2'nin kuvveti olmalıdır","Elemanlar benzersiz olmalıdır","Dizi bağlı liste olmalıdır"], a:0,
+ e:"İkili arama sıralı aramadan verimlidir ama liste önce sıralanmış olmalıdır."},
+{t:"rec", q:"a = {5,7,9,13,32,33,42,54,56,88} dizisinde 33 aranırken incelenen mid indeksleri sırasıyla nedir?", o:["4, 7, 5","4, 5","5, 7, 4","4, 6, 5"], a:0, mono:true,
+ e:"(0+9)/2=4 → a[4]=32 < 33 → first=5. (5+9)/2=7 → a[7]=54 > 33 → last=6. (5+6)/2=5 → a[5]=33 bulundu."},
+{t:"rec", q:"Aynı dizide (5 7 9 13 32 33 42 54 56 88) 13 aranırken incelenen mid indeksleri nedir?", o:["4, 1, 2, 3","4, 2, 3","4, 1, 3","3"], a:0, mono:true,
+ e:"mid=4 (32) → sol: 0..3, mid=1 (7) → sağ: 2..3, mid=2 (9) → sağ: 3..3, mid=3 (13) bulundu."},
+{t:"rec", q:"Slayttaki binarySearch fonksiyonunun temel durumları nelerdir?", o:["target == a[mid] (bulundu) ve first > last (yok)","first == 0 ve last == size","mid == 0","target < a[mid]"], a:0,
+ e:"Bulunursa indeks mid döner. first > last olursa aranan dizide yoktur ve −1 döner."},
+{t:"rec", q:"İkili aramada her başarısız karşılaştırma kalan listenin ne kadarını eler?", o:["Yarısını","Bir elemanı","Çeyreğini","Tamamını"], a:0,
+ e:"Adı da buradan gelir: her başarısız testte arama alanı 1/2 oranında azalır. Sıralı aramada ise sadece 1 eleman elenir."},
+{t:"rec", q:"Slayttaki “özyinelemeli çözüm için 4 soru” arasında hangisi YOKTUR?", o:["Fonksiyon kaç satır kod içerir?","Problemi aynı türden daha küçük problemlerle nasıl tanımlarım?","Hangi örnek temel durum olabilir?","Boyut küçüldükçe temel duruma ulaşılacak mı?"], a:0,
+ e:"4 soru: daha küçük problemlerle tanım, her çağrının boyutu nasıl küçülttüğü, temel durum, temel duruma ulaşılıp ulaşılmayacağı."},
+{t:"rec", q:"Kuyruk özyinelemesi (tail recursion) nedir?", o:["Özyinelemeli çağrının fonksiyonun yaptığı son işlem olması","Fonksiyonun kuyruk veri yapısı kullanması","İki özyinelemeli çağrı yapılması","Temel durumun sonda yazılması"], a:0,
+ e:"Çağrıdan sonra yapılacak iş kalmaz; böyle fonksiyonlar kolayca döngüye çevrilir. writeBackward kuyruk özyinelemelidir."},
+{t:"rec", q:"Hangi fonksiyon kuyruk özyinelemelidir (tail recursive)?", o:["writeBackward","fact","writeVertical","maxArray"], a:0,
+ e:"writeBackward'da son işlem özyinelemeli çağrıdır. fact'te çağrıdan sonra n* çarpması, writeVertical'da cout, maxArray'de max() yapılır."},
+{t:"rec", q:"Slayta göre bazı özyinelemeli çözümleri verimsiz yapan iki etken nedir?", o:["Fonksiyon çağrılarının ek yükü ve algoritmanın doğasındaki verimsizlik","Değişken sayısı ve döngü sayısı","Derleyici optimizasyonu ve bellek hizalama","Pointer kullanımı ve dizi boyutu"], a:0,
+ e:"Her çağrı kayıt tutar (yerel değişkenler, dönüş adresi). Çok çağrı bu ek yükü büyütür. Bazı algoritmalar da doğası gereği verimsizdir."},
+{t:"rec", q:"maxArray(<1,6,8,3>) için toplam kaç maxArray çağrısı yapılır?", o:["7","4","3","8"], a:0, mono:true,
+ e:"1 çağrı <1,6,8,3> + 2 çağrı (<1,6>, <8,3>) + 4 çağrı (tek elemanlılar) = 7. Sonuç 8."},
+{t:"rec", q:"Kutu izinde (box trace) her kutu kabaca neye karşılık gelir?", o:["Bir etkinleştirme kaydına (activation record)","Bir döngü adımına","Bir heap bloğuna","Bir global değişkene"], a:0,
+ e:"Her fonksiyon çağrısı yeni bir kutu (argümanlar, yerel değişkenler, dönüş değeri yer tutucusu) olarak çizilir. Bu, çalışma zamanındaki activation record'a karşılık gelir."},
+{t:"rec", q:"fact(-1) çağrılırsa ne olur? (slayttaki fact)", o:["n hiç 0 olmaz; sonsuz özyineleme / stack overflow","1 döner","0 döner","-1 döner"], a:0, mono:true,
+ e:"fact'in ön koşulu n ≥ 0. n = −1, −2, … diye gider ve temel durum (n == 0) hiç sağlanmaz."},
+{t:"rec", q:"Değişmez (invariant) nedir?", o:["Algoritmanın belirli bir noktasında her zaman doğru olan koşul","Hiç değişmeyen global değişken","Temel durumun dönüş değeri","Sabit (const) parametre"], a:0,
+ e:"Slayt: “Değişmez, bir algoritmanın/programın belirli bir noktasında her zaman doğru olan koşuldur.” fact'te: n > 0, dolayısıyla n−1 ≥ 0."},
+{t:"rec", q:"f(1234) çağrısının döndürdüğü değer nedir?", c:"int f(int n) {\n  if (n < 10) return n;\n  return n % 10 + f(n / 10);\n}", o:["10","1234","4","24"], a:0, mono:true,
+ e:"Rakamlar toplamı: 4 + f(123) = 4 + 3 + f(12) = 4 + 3 + 2 + f(1) = 4+3+2+1 = 10."},
+{t:"rec", q:"İkili arama hangi genel stratejiye örnektir?", o:["Böl ve yönet (divide and conquer)","Açgözlü (greedy)","Kaba kuvvet (brute force)","Dinamik programlama"], a:0,
+ e:"Problemi ikiye böl, uygun yarıyı (daha küçük problemi) aynı stratejiyle çöz, temel duruma kadar devam et."},
+{t:"rec", q:"Slayta göre özyinelemeli çözüm ne zaman KULLANILMAMALIDIR?", o:["Verimsizse ve açık, verimli bir yinelemeli çözüm varsa","Problem küçükse","Temel durum tek ise","Fonksiyon void ise"], a:0,
+ e:"Bir problemi yineleme ile kolay, açık ve verimli çözebiliyorsan bunu yapmalısın."},
+{t:"rec", q:"mid = first + (last - first) / 2 ifadesi (first + last) / 2 ile karşılaştırıldığında ne sağlar?", o:["Aynı sonucu verir ama büyük indekslerde toplama taşmasını önler","Farklı bir orta nokta seçer","Sadece çift boyutta çalışır","Daha yavaştır, avantajı yoktur"], a:0,
+ e:"Matematiksel olarak aynı orta noktayı verir; first + last int sınırını aşabilecekken bu yazım taşmayı önler."},
+{t:"rec", q:"binarySearch2 sürümünde sağ yarı için yapılan çağrı hangisidir?", o:["binarySearch2(a, mid, last, target)","binarySearch2(a, mid+1, last, target)","binarySearch2(a, first, mid, target)","binarySearch2(a, mid-1, last, target)"], a:0, mono:true,
+ e:"binarySearch2'de temel durum first == last'tır ve target < a[mid] değilse mid de aralığa dahil edilir: (a, mid, last, target)."}
+];
+
+/* ---------- Ezber kartları ---------- */
+const CARDS = [
+["ptr","Pointer nedir?","Başka bir nesnenin bellek adresini tutan değişken."],
+["ptr","& ve * operatörleri","&x → x'in adresi (address-of).\n*p → p'nin gösterdiği nesne (dereference / indirection)."],
+["ptr","int *p = 1000;  p++ → ?","1004 (int 4 bayt). char* → 1001, double* → 1008."],
+["ptr","double *a, b; → b'nin tipi?","double (pointer değil). Her pointer isminin önüne * gerekir."],
+["ptr","p == q  vs  *p == *q","p == q: aynı nesneyi mi gösteriyor?\n*p == *q: gösterilen değerler eşit mi?"],
+["ptr","Bellek bölgeleri","Stack: yerel değ. + parametreler (derleyici)\nHeap: dinamik (allocator)\nGlobal data: statik/global (derleyici)"],
+["ptr","new double[20] kaç bayt?","160 bayt (20 × 8)."],
+["ptr","Memory leak","Kullanılmayan dinamik belleği delete etmemek; adres kaybolur. Program bitince sona erer."],
+["ptr","Dangling pointer","delete edilmiş belleği gösteren pointer'ı kullanmak."],
+["ptr","Yaygın 4 new/delete hatası","1) Dangling pointer\n2) Memory leak\n3) new ile ayrılmamışa delete\n4) Dizide delete [] yerine delete"],
+["ptr","Shallow vs deep copy","Shallow: iki pointer aynı veriyi gösterir.\nDeep: her pointer'ın kendi kopyası vardır."],
+["ptr","Dizi genişletme sırası","temp = new int[size*2] → kopyala → delete [] ptr → ptr = temp → size *= 2"],
+["ptr","ADT / Veri yapısı / Algoritma","ADT: nesne + işlemlerin matematiksel tanımı.\nVeri yapısı: ADT'yi gerçekleştiren algoritmalar kümesi.\nAlgoritma: adım adım, dilden bağımsız süreç."],
+["list","List ADT temel işlemleri","get(i), set(i,x), add(i,x), remove(i), size(), isEmpty()"],
+["list","add vs get için i aralığı","add: 0 ≤ i ≤ size\nget/set/remove: 0 ≤ i < size"],
+["list","“= 0” ile biten sanal fonksiyon","Saf sanal (pure virtual). Sınıf soyuttur; türetilmiş sınıflar uygular."],
+["list","ADT'nin 3 unsuru","Veri, işlemler, kısıtlar (ön/son koşul)."],
+["list","Dizilerin 5 sorunu","Sabit boyut, sınır denetimi yok, el ile bellek yönetimi, dinamik boyutlandırma yok, yardımcı fonksiyon yok."],
+["list","insertFront kodu","Node* p = new Node(val);\np->next = head;\nhead = p;\ncount++;"],
+["list","deleteFirst kodu","if (head != nullptr) {\n  Node* t = head;\n  head = head->next;\n  delete t;\n  count--;\n}"],
+["list","print döngü koşulu","while (walk != nullptr)\n(walk->next değil!)"],
+["list","Ardışık new neden bitişik değil?","Heap parçalanması, hizalama/dolgu, OS'in ayrı bellek sayfaları."],
+["stack","Yığın işlemleri","push, pop, isEmpty, isFull, returnTop. LIFO. Diğer adı: push-down list."],
+["stack","Yığın uygulama kategorileri (4)","Tersine çevirme, ayrıştırma (parantez), kullanımı erteleme (postfix), geri izleme (N-Vezir, labirent)."],
+["stack","a - b / (c + d * e) → postfix","a b c d e * + / -"],
+["stack","((a+b)*c-(d-e))/(f+g) → postfix","a b + c * d e - - f g + /"],
+["stack","6 5 2 3 + 8 * + 3 + * = ?","288"],
+["stack","Postfix'te işleç gelince","İki pop (ilk çıkan SAĞ işlenen), işlem, sonucu push."],
+["stack","Dönüşümde '(' önceliği","Okunurken en yüksek, yığındayken en düşük."],
+["stack","Dönüşümde ')' gelince","'(' görülene kadar pop edip çıktıya yaz; parantezleri at."],
+["stack","Parantez kontrolü 3 hata","1) Kapanışta yığın boş\n2) Pop edilen tür eşleşmiyor\n3) Sonda yığın dolu"],
+["stack","N-Vezir: yığın + ?","Yığın (satır, sütun) kayıtları + 'filled' sayacı. Yığın boşalırsa çözüm yok."],
+["queue","Kuyruk işlemleri","enqueue (rear), dequeue (front), isEmpty, isFull. FIFO."],
+["queue","Doğrusal kuyruk başlangıcı","front = 0, rear = −1\nBoş: rear < front\nSayı: rear − front + 1"],
+["queue","Doğrusal kuyruk sorunu","Boşalan baştaki gözler tekrar kullanılmaz. Çözüm: dairesel dizi."],
+["queue","Dairesel artırma","i = (i + 1) % max"],
+["queue","“front bir önceyi gösterir” yaklaşımı","Boş: front == rear\nDolu: front == (rear+1) % size\nDezavantaj: bir göz boş kalır."],
+["queue","Kuyruk uygulamaları","İş (job) sıralama, print spooling, ağ paketleri."],
+["queue","6 kuyruk yöntemi","Fiziksel model, iki indeksli doğrusal, bir gözü boş dairesel, flag'li dairesel, sayaçlı dairesel, özel değerli dairesel."],
+["rec","Temel durum","Fonksiyonun kendini çağırmadan doğrudan döndüğü koşul. Yoksa stack overflow."],
+["rec","Özyineleme 4 soru","1) Daha küçük aynı problem?\n2) Boyut nasıl küçülür?\n3) Temel durum?\n4) Temel duruma ulaşılır mı?"],
+["rec","fact(3) çağrı sayısı","4 çağrı (3,2,1,0). Sonuç 6."],
+["rec","writeVertical(123)","1\n2\n3 (önce çağrı, sonra n%10 yazılır)"],
+["rec","İkili arama temel durumlar","target == a[mid] → mid\nfirst > last → −1"],
+["rec","33 araması mid sırası","4 (32) → 7 (54) → 5 (33) ✓"],
+["rec","Tail recursion","Özyinelemeli çağrı fonksiyonun son işlemi. writeBackward evet; fact hayır."],
+["rec","Özyineleme verimsizliği","Fonksiyon çağrısı ek yükü + algoritmanın doğasındaki verimsizlik."],
+["rec","Kutu izi","Her kutu ≈ bir activation record. Çağrıları etiketle, ok çiz, dönüşte üstünü çiz."]
+];
+
+/* ---------- Kalıcı durum (sadece bu tarayıcıda) ---------- */
+const KEY = "yzm201.v1";
+let S = {stats:{}, wrong:{}, done:{}, known:{}};
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+Q.forEach((q,i)=>{ q.id = q.t + "-" + i; });
+
+/* ---------- Yardımcılar ---------- */
+const $ = s => document.querySelector(s);
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function topicStats(t){ let seen=0, right=0; Q.forEach(q=>{ if (q.t===t && S.stats[q.id]){ seen++; if (S.stats[q.id]==="r") right++; } }); return {seen,right,total:Q.filter(q=>q.t===t).length}; }
+
+/* ---------- Ana sayfa ---------- */
+function renderHome(){
+  const list = $("#topicList"); list.textContent = "";
+  TKEYS.forEach(k=>{
+    const T = TOPICS[k], st = topicStats(k);
+    const b = el("a","tcard"); b.href = "#" + T.view; b.style.textDecoration="none"; b.style.color="inherit";
+    b.innerHTML = '<svg viewBox="0 0 56 40" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent)">'+T.svg+'</svg>';
+    const mid = el("div"); mid.style.minWidth="0";
+    mid.appendChild(el("div","tt",T.name)); mid.appendChild(el("div","ts",T.sub));
+    const meta = el("div","meta");
+    meta.appendChild(el("div",null,T.lec.split(" · ")[0]));
+    const m2 = el("div", S.done[k] ? "done" : null, S.done[k] ? "✓ okundu" : st.seen + "/" + st.total + " soru"); meta.appendChild(m2);
+    b.appendChild(mid); b.appendChild(meta);
+    const bar = el("div","bar"); const i = el("i"); i.style.width = Math.round(100*st.seen/st.total)+"%"; bar.appendChild(i); b.appendChild(bar);
+    list.appendChild(b);
+  });
+  const ids = Object.keys(S.stats); const right = ids.filter(id=>S.stats[id]==="r").length;
+  $("#stQ").textContent = Q.length;
+  $("#stDone").textContent = ids.length;
+  $("#stPct").textContent = ids.length ? Math.round(100*right/ids.length)+"%" : "–";
+}
+
+/* ---------- Yönlendirme ---------- */
+const VIEWS = {konular:"v-konular", test:"v-test", kartlar:"v-kartlar", araclar:"v-araclar"};
+TKEYS.forEach(k=>{ VIEWS[TOPICS[k].view] = "v-" + TOPICS[k].view; });
+const SUBIDS = {};
+document.querySelectorAll("article.view [id]").forEach(n=>{ SUBIDS[n.id] = n.closest("article").id.slice(2); });
+let lastTopicView = null;
+function route(){
+  let h = (location.hash || "#konular").slice(1);
+  let anchor = null;
+  if (SUBIDS[h]) { anchor = h; h = SUBIDS[h]; }
+  if (!VIEWS[h]) h = "konular";
+  Object.values(VIEWS).forEach(id=>{ document.getElementById(id).hidden = true; });
+  document.getElementById(VIEWS[h]).hidden = false;
+  const topicKey = TKEYS.find(k=>TOPICS[k].view===h);
+  const tab = topicKey ? "konular" : h;
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current", a.dataset.tab===tab ? "page" : "false"));
+  const bar = $("#topbar");
+  if (topicKey){ bar.classList.add("sub"); $("#barTitle").textContent = TOPICS[topicKey].name; $("#barPill").textContent = TOPICS[topicKey].lec.split(" · ")[0]; lastTopicView = h; }
+  else { bar.classList.remove("sub"); $("#barTitle").textContent = {konular:"YZM201 Sınav Kampı", test:"Test", kartlar:"Kartlar", araclar:"Araçlar"}[h];
+         $("#barPill").textContent = {konular:"0x00", test:Q.length+" soru", kartlar:CARDS.length+" kart", araclar:"adım adım"}[h]; }
+  if (h==="konular") renderHome();
+  if (h==="test" && !quiz) renderSetup();
+  if (anchor){ const n = document.getElementById(anchor); if (n) setTimeout(()=>n.scrollIntoView({block:"start"}),0); }
+  else window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+$("#backBtn").addEventListener("click", ()=>{ location.hash = "konular"; });
+// TOC bağlantıları için başlığın altında kalmasın
+const styleOff = document.createElement("style"); styleOff.textContent = "article [id]{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 70px)}"; document.head.appendChild(styleOff);
+
+document.querySelectorAll("[data-done]").forEach(b=>{
+  const k = b.dataset.done;
+  const sync = ()=>{ b.textContent = S.done[k] ? "✓ Bitirildi" : "Bitirdim olarak işaretle"; };
+  sync();
+  b.addEventListener("click", ()=>{ S.done[k] = !S.done[k]; save(); sync(); });
+});
+document.querySelectorAll("[data-quiz]").forEach(a=>{
+  a.addEventListener("click", ()=>{ selTopic = a.dataset.quiz; quiz = null; });
+});
+
+/* ---------- Test ---------- */
+let selTopic = "all", selCount = 15, quiz = null;
+const TOPIC_CHIPS = [["all","Tümü"]].concat(TKEYS.map(k=>[k,TOPICS[k].name])).concat([["wrong","Yanlışlarım"]]);
+function poolFor(t){
+  if (t==="all") return Q.slice();
+  if (t==="wrong") return Q.filter(q=>S.wrong[q.id]);
+  return Q.filter(q=>q.t===t);
+}
+function renderSetup(){
+  $("#quizSetup").hidden = false; $("#quizRun").hidden = true; $("#quizEnd").hidden = true;
+  const tc = $("#topicChips"); tc.textContent = "";
+  TOPIC_CHIPS.forEach(([k,label])=>{
+    const n = poolFor(k).length;
+    const c = el("button","chip", label + " · " + n); c.setAttribute("aria-pressed", String(selTopic===k));
+    c.addEventListener("click", ()=>{ selTopic = k; renderSetup(); });
+    tc.appendChild(c);
+  });
+  const cc = $("#countChips"); cc.textContent = "";
+  [[10,"10"],[15,"15"],[30,"30"],[999,"Hepsi"]].forEach(([n,label])=>{
+    const c = el("button","chip",label); c.setAttribute("aria-pressed", String(selCount===n));
+    c.addEventListener("click", ()=>{ selCount = n; renderSetup(); });
+    cc.appendChild(c);
+  });
+  const pool = poolFor(selTopic);
+  $("#poolInfo").textContent = pool.length ? Math.min(pool.length, selCount) + " soru sorulacak (havuz: " + pool.length + ")." : "Bu filtrede soru yok. Yanlış yaptığın soru yoksa önce başka bir konudan test çöz.";
+  $("#startQuiz").disabled = !pool.length;
+  const rows = $("#statRows"); rows.textContent = "";
+  TKEYS.forEach(k=>{
+    const st = topicStats(k);
+    const r = el("div","row"); r.appendChild(el("span",null,TOPICS[k].name));
+    r.appendChild(el("span",null, st.seen ? (st.right + "/" + st.seen + " doğru · " + st.total + " soru") : ("0/" + st.total + " çözüldü")));
+    rows.appendChild(r);
+  });
+}
+function startQuiz(pool){
+  const qs = shuffle(pool).slice(0, Math.min(pool.length, selCount));
+  quiz = {qs, i:0, res:[]};
+  $("#quizSetup").hidden = true; $("#quizEnd").hidden = true; $("#quizRun").hidden = false;
+  showQ();
+}
+$("#startQuiz").addEventListener("click", ()=>startQuiz(poolFor(selTopic)));
+function showQ(){
+  const q = quiz.qs[quiz.i];
+  $("#qTopic").textContent = TOPICS[q.t].name.toUpperCase();
+  $("#qCount").textContent = (quiz.i+1) + " / " + quiz.qs.length;
+  $("#qBar").style.width = (100*quiz.i/quiz.qs.length) + "%";
+  $("#qText").textContent = q.q;
+  const pre = $("#qCode"); if (q.c){ pre.hidden = false; pre.firstChild.textContent = q.c; } else pre.hidden = true;
+  const box = $("#qOpts"); box.textContent = "";
+  const order = shuffle(q.o.map((_,i)=>i));
+  order.forEach((oi, pos)=>{
+    const b = el("button","opt" + (q.mono ? " mono" : ""));
+    b.appendChild(el("span","l","ABCD"[pos])); b.appendChild(el("span","t",q.o[oi]));
+    b.dataset.oi = oi;
+    b.addEventListener("click", ()=>answer(oi));
+    box.appendChild(b);
+  });
+  $("#qExplain").hidden = true;
+  const nx = $("#qNext"); nx.disabled = true; nx.textContent = quiz.i === quiz.qs.length-1 ? "Sonucu gör" : "Sonraki";
+}
+function answer(oi){
+  const q = quiz.qs[quiz.i]; const ok = oi === q.a;
+  document.querySelectorAll("#qOpts .opt").forEach(b=>{
+    b.disabled = true; const v = +b.dataset.oi;
+    if (v === q.a) b.classList.add("right"); else if (v === oi) b.classList.add("wrong");
+  });
+  quiz.res.push({q, ok});
+  S.stats[q.id] = ok ? "r" : "w";
+  if (ok) delete S.wrong[q.id]; else S.wrong[q.id] = true;
+  save();
+  const ex = $("#qExplain"); ex.hidden = false; ex.className = "explain " + (ok ? "ok" : "no"); ex.textContent = "";
+  ex.appendChild(el("b",null, ok ? "Doğru" : "Yanlış. Doğru cevap: " + q.o[q.a]));
+  ex.appendChild(document.createTextNode(q.e));
+  $("#qNext").disabled = false;
+  $("#qBar").style.width = (100*(quiz.i+1)/quiz.qs.length) + "%";
+}
+$("#qNext").addEventListener("click", ()=>{
+  if (quiz.i < quiz.qs.length-1){ quiz.i++; showQ(); window.scrollTo(0,0); } else endQuiz();
+});
+$("#qQuit").addEventListener("click", ()=>{ if (quiz.res.length) endQuiz(); else { quiz = null; renderSetup(); } });
+function endQuiz(){
+  $("#quizRun").hidden = true; $("#quizEnd").hidden = false;
+  const n = quiz.res.length, r = quiz.res.filter(x=>x.ok).length;
+  const pct = n ? Math.round(100*r/n) : 0;
+  $("#rScore").textContent = r + "/" + n;
+  $("#rMsg").textContent = pct >= 85 ? "%" + pct + ". Sınava hazırsın; yanlışlara bir kez daha bak." :
+                           pct >= 60 ? "%" + pct + ". İyi gidiyor. Yanlış çıkan konuların Tuzak kutularını tekrar oku." :
+                                       "%" + pct + ". Önce aşağıdaki zayıf konunun anlatımına dön, sonra yanlışları tekrar çöz.";
+  const rows = $("#rRows"); rows.textContent = "";
+  TKEYS.forEach(k=>{
+    const sub = quiz.res.filter(x=>x.q.t===k); if (!sub.length) return;
+    const row = el("div","row"); row.appendChild(el("span",null,TOPICS[k].name));
+    row.appendChild(el("span",null, sub.filter(x=>x.ok).length + "/" + sub.length)); rows.appendChild(row);
+  });
+  const wrongs = quiz.res.filter(x=>!x.ok).map(x=>x.q);
+  const wb = $("#rWrong"); wb.disabled = !wrongs.length; wb.onclick = ()=>{ selCount = 999; startQuiz(wrongs); };
+  quiz.done = true;
+}
+$("#rAgain").addEventListener("click", ()=>{ quiz = null; renderSetup(); });
+$("#resetStats").addEventListener("click", ()=>{ $("#resetConfirm").hidden = false; });
+$("#resetYes").addEventListener("click", ()=>{ S.stats = {}; S.wrong = {}; save(); $("#resetConfirm").hidden = true; renderSetup(); });
+
+/* ---------- Kartlar ---------- */
+let cardTopic = "all", deck = [], ci = 0;
+function buildDeck(){
+  deck = shuffle(CARDS.map((c,i)=>({c,i})).filter(x=>(cardTopic==="all" || x.c[0]===cardTopic) && !S.known["c"+x.i]));
+  ci = 0; showCard();
+}
+function renderCardChips(){
+  const box = $("#cardChips"); box.textContent = "";
+  [["all","Tümü"]].concat(TKEYS.map(k=>[k,TOPICS[k].name])).forEach(([k,l])=>{
+    const c = el("button","chip",l); c.setAttribute("aria-pressed", String(cardTopic===k));
+    c.addEventListener("click", ()=>{ cardTopic = k; renderCardChips(); buildDeck(); });
+    box.appendChild(c);
+  });
+}
+function showCard(){
+  const f = $("#fcard"); f.classList.remove("flip");
+  const total = CARDS.filter(c=>cardTopic==="all" || c[0]===cardTopic).length;
+  if (!deck.length){
+    $("#fTopic").textContent = "Deste bitti"; $("#fQ").textContent = "Bu destedeki tüm kartları biliyorsun."; $("#fA").textContent = "“Desteyi sıfırla” ile baştan başlayabilirsin.";
+    $("#fCount").textContent = total + "/" + total + " biliniyor"; $("#fYes").disabled = $("#fNo").disabled = true; return;
+  }
+  $("#fYes").disabled = $("#fNo").disabled = false;
+  const x = deck[ci % deck.length];
+  $("#fTopic").textContent = TOPICS[x.c[0]].name; $("#fQ").textContent = x.c[1]; $("#fA").textContent = x.c[2];
+  $("#fCount").textContent = (total - deck.length) + "/" + total + " biliniyor · kalan " + deck.length;
+}
+const flip = ()=>$("#fcard").classList.toggle("flip");
+$("#fcard").addEventListener("click", flip);
+$("#fcard").addEventListener("keydown", e=>{ if (e.key===" "||e.key==="Enter"){ e.preventDefault(); flip(); } });
+$("#fYes").addEventListener("click", ()=>{ const x = deck[ci % deck.length]; S.known["c"+x.i] = true; save(); deck.splice(ci % deck.length,1); if (deck.length) ci = ci % deck.length; showCard(); });
+$("#fNo").addEventListener("click", ()=>{ ci = (ci+1) % deck.length; showCard(); });
+$("#fReset").addEventListener("click", ()=>{ CARDS.forEach((c,i)=>{ if (cardTopic==="all" || c[0]===cardTopic) delete S.known["c"+i]; }); save(); buildDeck(); });
+
+/* ---------- Araçlar ---------- */
+function fillTable(tbl, head, rows){
+  tbl.textContent = "";
+  const tr = el("tr"); head.forEach(h=>tr.appendChild(el("th",null,h))); tbl.appendChild(tr);
+  rows.forEach(r=>{ const t = el("tr"); r.forEach((v,i)=>{ const td = el("td", i!==1 || head.length<3 ? "mono" : "mono", v); t.appendChild(td); }); tbl.appendChild(t); });
+}
+function tokenize(s){ return s.match(/[A-Za-z_][A-Za-z0-9_]*|\d+(?:\.\d+)?|[-+*/()]/g) || []; }
+const PREC = {"+":1,"-":1,"*":2,"/":2};
+function infixToPostfix(s){
+  const toks = tokenize(s.replace(/[–−]/g,"-")); const st = [], out = [], rows = [];
+  for (const t of toks){
+    let act;
+    if (/^[A-Za-z0-9_.]+$/.test(t)){ out.push(t); act = "işlenen → çıktı"; }
+    else if (t === "("){ st.push(t); act = "push ("; }
+    else if (t === ")"){
+      const popped = [];
+      while (st.length && st[st.length-1] !== "("){ const o = st.pop(); out.push(o); popped.push(o); }
+      if (!st.length) return {err:"Eşleşmeyen ')' var."};
+      st.pop(); act = (popped.length ? "pop " + popped.join(" ") + " → çıktı, " : "") + "( atılır";
+    } else {
+      const popped = [];
+      while (st.length && st[st.length-1] !== "(" && PREC[st[st.length-1]] >= PREC[t]){ const o = st.pop(); out.push(o); popped.push(o); }
+      st.push(t); act = (popped.length ? "pop " + popped.join(" ") + " (öncelik ≥), " : "") + "push " + t;
+    }
+    rows.push([t, act, st.join(" ") || "∅", out.join(" ")]);
+  }
+  const rest = [];
+  while (st.length){ const o = st.pop(); if (o === "(") return {err:"Kapanmayan '(' var."}; out.push(o); rest.push(o); }
+  if (rest.length) rows.push(["son", "kalanları pop: " + rest.join(" "), "∅", out.join(" ")]);
+  return {out: out.join(" "), rows};
+}
+function runInfix(){
+  const r = infixToPostfix($("#inInfix").value);
+  if (r.err){ $("#outInfix").textContent = r.err; $("#tblInfix").textContent = ""; return; }
+  $("#outInfix").textContent = "Postfix: " + r.out;
+  fillTable($("#tblInfix"), ["Okunan","İşlem","Yığın (alt→üst)","Çıktı"], r.rows);
+}
+$("#goInfix").addEventListener("click", runInfix);
+$("#inInfix").addEventListener("keydown", e=>{ if (e.key==="Enter") runInfix(); });
+
+function runPost(){
+  const raw = $("#inPost").value.trim().replace(/[–−]/g,"-");
+  let toks = /\s/.test(raw) ? raw.split(/\s+/) : raw.split("");
+  const st = [], rows = [];
+  for (const t of toks){
+    if (/^-?\d+(\.\d+)?$/.test(t)){ st.push(+t); rows.push([t,"push",st.join("  ")]); continue; }
+    if (!"+-*/".includes(t) || t.length!==1){ $("#outPost").textContent = "Tanınmayan simge: " + t; $("#tblPost").textContent=""; return; }
+    if (st.length < 2){ $("#outPost").textContent = "Hata: '" + t + "' için yığında iki işlenen yok."; fillTable($("#tblPost"),["Okunan","İşlem","Yığın (alt→üst)"],rows); return; }
+    const b = st.pop(), a = st.pop();
+    const v = t==="+"?a+b : t==="-"?a-b : t==="*"?a*b : a/b;
+    const vv = Math.round(v*1e6)/1e6;
+    st.push(vv); rows.push([t, "pop " + b + ", pop " + a + " → " + a + " " + t + " " + b + " = " + vv, st.join("  ")]);
+  }
+  $("#outPost").textContent = st.length===1 ? "Sonuç: " + st[0] : "Hata: sonda yığında " + st.length + " eleman var.";
+  fillTable($("#tblPost"), ["Okunan","İşlem","Yığın (alt→üst)"], rows);
+}
+$("#goPost").addEventListener("click", runPost);
+$("#inPost").addEventListener("keydown", e=>{ if (e.key==="Enter") runPost(); });
+
+function runParen(){
+  const s = $("#inParen").value; const st = [], rows = []; const M = {")":"(", "]":"[", "}":"{"};
+  let msg = null;
+  for (const ch of s){
+    if ("([{".includes(ch)){ st.push(ch); rows.push([ch,"push",st.join(" ")||"∅"]); }
+    else if (")]}".includes(ch)){
+      if (!st.length){ msg = "Dengesiz: '" + ch + "' geldiğinde yığın boş."; rows.push([ch,"yığın boş → HATA","∅"]); break; }
+      const top = st.pop();
+      if (top !== M[ch]){ msg = "Dengesiz: '" + ch + "' için '" + M[ch] + "' beklenirdi, pop edilen '" + top + "'."; rows.push([ch,"pop " + top + " → eşleşmiyor, HATA", st.join(" ")||"∅"]); break; }
+      rows.push([ch,"pop " + top + " → eşleşti", st.join(" ")||"∅"]);
+    }
+  }
+  if (!msg) msg = st.length ? "Dengesiz: dizi bitti ama yığında " + st.join(" ") + " kaldı." : "Dengeli.";
+  $("#outParen").textContent = msg;
+  fillTable($("#tblParen"), ["Okunan","İşlem","Yığın (alt→üst)"], rows);
+}
+$("#goParen").addEventListener("click", runParen);
+$("#inParen").addEventListener("keydown", e=>{ if (e.key==="Enter") runParen(); });
+
+const CQN = 5; let cq, auto = 0;
+function cqReset(){ cq = {a:Array(CQN).fill(null), front:0, rear:-1, count:0, log:[]}; auto = 0; cqDraw(); }
+function cqDraw(){
+  const box = $("#cqCells"); box.textContent = "";
+  for (let i=0;i<CQN;i++){
+    const c = el("div","c"); const v = el("div","v" + (cq.a[i]!==null ? " on" : ""), cq.a[i]!==null ? String(cq.a[i]) : "");
+    c.appendChild(v); c.appendChild(el("div","i","["+i+"]"));
+    const marks = []; if (i===cq.front) marks.push("F"); if (i===cq.rear) marks.push("R");
+    c.appendChild(el("div","m", marks.join(" "))); box.appendChild(c);
+  }
+  $("#cqState").textContent = "front = " + cq.front + "   rear = " + cq.rear + "   count = " + cq.count + (cq.count===0 ? "   (boş)" : cq.count===CQN ? "   (dolu)" : "");
+  $("#cqLog").textContent = cq.log.slice(-8).join("\n");
+}
+$("#cqEnq").addEventListener("click", ()=>{
+  let v = $("#cqVal").value.trim(); if (!v){ auto++; v = String.fromCharCode(64 + ((auto-1)%26) + 1); }
+  if (cq.count === CQN){ cq.log.push("enqueue(" + v + "): DOLU (count == size), eklenmedi"); cqDraw(); return; }
+  const old = cq.rear; cq.rear = (cq.rear + 1) % CQN; cq.a[cq.rear] = v; cq.count++;
+  cq.log.push("enqueue(" + v + "): rear = (" + old + "+1) % " + CQN + " = " + cq.rear);
+  $("#cqVal").value = ""; cqDraw();
+});
+$("#cqDeq").addEventListener("click", ()=>{
+  if (cq.count === 0){ cq.log.push("dequeue: BOŞ (count == 0)"); cqDraw(); return; }
+  const v = cq.a[cq.front]; cq.a[cq.front] = null; const old = cq.front; cq.front = (cq.front + 1) % CQN; cq.count--;
+  cq.log.push("dequeue → " + v + ": front = (" + old + "+1) % " + CQN + " = " + cq.front); cqDraw();
+});
+$("#cqReset").addEventListener("click", cqReset);
+
+let stk = [], stLog = [];
+function stDraw(){ $("#stState").textContent = "alt → üst:  " + (stk.length ? stk.join("  ") + "   ← top" : "∅ (boş)"); $("#stLog").textContent = stLog.slice(-8).join("\n"); }
+$("#stPush").addEventListener("click", ()=>{ let v = $("#stVal").value.trim() || String(stk.length+1); stk.push(v); stLog.push("push(" + v + ")"); $("#stVal").value=""; stDraw(); });
+$("#stPop").addEventListener("click", ()=>{ if (!stk.length) stLog.push("pop: yığın boş! (önce isEmpty kontrol et)"); else stLog.push("pop → " + stk.pop()); stDraw(); });
+$("#stReset").addEventListener("click", ()=>{ stk = []; stLog = []; stDraw(); });
+
+/* ---------- Başlat ---------- */
+renderCardChips(); buildDeck();
+runInfix(); runPost(); runParen(); cqReset();
+["A","B","C","D"].forEach(()=>$("#cqEnq").click()); $("#cqDeq").click(); $("#cqDeq").click();
+["8","860","-60","10"].forEach(v=>{ $("#stVal").value = v; $("#stPush").click(); });
+route();
+})();
+</script>
+</body>
+</html>
